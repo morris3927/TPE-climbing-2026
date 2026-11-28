@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第 5 + 8 段逐點行程</title>
+<meta name="description" content="2026 臺北大縱走第 5 段碧山巖往劍潭步行，接第 8 段關渡往動物園河濱單車，逐點時間表與寶石位置">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f6f4ef; --surface: #ffffff; --surface-2: #efece4; --text: #1f2421; --muted: #5f675f;
+  --line: #ddd8cc; --accent: #2f6b4f; --warn-bg: #fff4dc; --warn-line: #e2b04a; --warn-text: #6b4a05;
+  --danger: #b5432f; --d4: #2f6fbf;
+  --must: #5f675f; --skip: #2f8a4f; --skip-bg: #e6f3ea; --maybe: #a26a00; --maybe-bg: #fff4dc;
+  --shadow: 0 1px 2px rgba(0,0,0,.04), 0 4px 16px rgba(0,0,0,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #141716; --surface: #1c201e; --surface-2: #242926; --text: #e8ebe7; --muted: #9ba59e;
+    --line: #333a36; --accent: #6fc29a; --warn-bg: #2e2716; --warn-line: #a17c2c; --warn-text: #f0d79a;
+    --danger: #ef7d68; --d4: #6aa6ee;
+    --must: #9ba59e; --skip: #6fc29a; --skip-bg: #1c2e24; --maybe: #f0c060; --maybe-bg: #2e2716;
+    --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #141716; --surface: #1c201e; --surface-2: #242926; --text: #e8ebe7; --muted: #9ba59e;
+  --line: #333a36; --accent: #6fc29a; --warn-bg: #2e2716; --warn-line: #a17c2c; --warn-text: #f0d79a;
+  --danger: #ef7d68; --d4: #6aa6ee;
+  --must: #9ba59e; --skip: #6fc29a; --skip-bg: #1c2e24; --maybe: #f0c060; --maybe-bg: #2e2716;
+  --shadow: none;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font-family: "Noto Sans TC", system-ui, -apple-system, "PingFang TC", "Microsoft JhengHei", sans-serif;
+  line-height: 1.7; font-size: 16px;
+}
+a { color: var(--accent); }
+.wrap { max-width: 980px; margin: 0 auto; padding: 0 16px; }
+
+nav.toc { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+nav.toc .wrap { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; }
+nav.toc a { text-decoration: none; color: var(--muted); font-size: 14px; font-weight: 500; padding: 12px 10px; white-space: nowrap; }
+nav.toc a:hover { color: var(--text); }
+nav.toc a.back { color: var(--accent); font-weight: 700; }
+#themeBtn { margin-left: auto; background: none; border: 0; color: var(--muted); font: inherit; font-size: 14px; cursor: pointer; padding: 12px 6px; white-space: nowrap; }
+
+header.hero { padding: 40px 0 20px; }
+.eyebrow { font-size: 13px; letter-spacing: .12em; color: var(--muted); font-weight: 700; }
+h1 { font-size: clamp(28px, 5.5vw, 42px); line-height: 1.25; margin: 6px 0 12px; font-weight: 900; }
+.lede { color: var(--muted); max-width: 660px; margin: 0; }
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 24px; }
+.stat { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; box-shadow: var(--shadow); }
+.stat b { display: block; font-size: 24px; font-weight: 900; line-height: 1.25; font-variant-numeric: tabular-nums; }
+.stat span { font-size: 13px; color: var(--muted); }
+.stat.hot b { color: var(--skip); }
+
+section { padding: 32px 0 8px; scroll-margin-top: 48px; }
+h2 { font-size: 24px; font-weight: 900; margin: 0 0 6px; }
+.sub { color: var(--muted); margin: 0 0 18px; font-size: 15px; }
+
+.alert { background: var(--warn-bg); border: 1px solid var(--warn-line); color: var(--warn-text); border-radius: 12px; padding: 14px 16px; margin-bottom: 14px; font-size: 15px; }
+.alert strong { display: block; margin-bottom: 2px; }
+
+/* status pills */
+.pill { display: inline-flex; align-items: center; gap: 4px; font-size: 12.5px; font-weight: 700; border-radius: 999px; padding: 1px 10px; white-space: nowrap; border: 1px solid currentColor; }
+.pill.must { color: var(--must); }
+.pill.pass { color: var(--must); border-style: dashed; }
+.pill.skip { color: var(--skip); background: var(--skip-bg); border-color: transparent; }
+.pill.maybe { color: var(--maybe); background: var(--maybe-bg); border-color: transparent; }
+.key { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-bottom: 18px; font-size: 14px; color: var(--muted); }
+.key span { display: inline-flex; align-items: center; gap: 8px; }
+
+/* timeline */
+.leg { font-size: 13px; font-weight: 900; letter-spacing: .08em; color: var(--d4); margin: 22px 0 8px 2px; }
+.leg:first-child { margin-top: 0; }
+.stops { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.stop { display: grid; grid-template-columns: 64px 1fr; gap: 14px; background: var(--surface); border: 1px solid var(--line); border-left: 6px solid var(--line); border-radius: 14px; padding: 14px 18px; box-shadow: var(--shadow); }
+.stop[data-s="skip"] { border-left-color: var(--skip); }
+.stop[data-s="maybe"] { border-left-color: var(--maybe); }
+.stop[data-s="must"], .stop[data-s="pass"] { border-left-color: var(--d4); }
+.stop time { font-weight: 900; font-size: 18px; font-variant-numeric: tabular-nums; line-height: 1.5; }
+.stop-head { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
+.stop h3 { margin: 0; font-size: 17px; font-weight: 700; line-height: 1.5; }
+.stop p { margin: 6px 0 0; font-size: 15px; }
+.stop .save { display: inline-block; margin-top: 8px; font-size: 13px; font-weight: 700; color: var(--skip); background: var(--skip-bg); border-radius: 8px; padding: 2px 10px; }
+.stop .gem { font-size: 13px; color: var(--muted); margin-top: 8px; }
+.steps { margin: 6px 0 0; padding-left: 20px; font-size: 15px; }
+.steps li { margin: 3px 0; }
+.alt { margin-top: 10px; background: var(--surface-2); border-radius: 10px; padding: 10px 12px; font-size: 14.5px; }
+.alt b { display: block; font-size: 14px; margin-bottom: 2px; }
+.stop .fix { margin-top: 8px; font-size: 13.5px; padding: 8px 10px; border-radius: 8px; background: var(--warn-bg); color: var(--warn-text); }
+.unv { font-size: 12px; font-weight: 700; color: var(--warn-text); background: var(--warn-bg); border-radius: 6px; padding: 0 6px; margin-left: 4px; white-space: nowrap; }
+.alt + .alt { margin-top: 8px; }
+.hidden { display: none; }
+
+
+footer { padding: 36px 0 56px; color: var(--muted); font-size: 13px; }
+
+@media (max-width: 720px) {
+  .stats { grid-template-columns: repeat(2, 1fr); }
+  .stop { grid-template-columns: 1fr; gap: 2px; padding: 12px 14px; }
+  .stop time { font-size: 16px; }
+    header.hero { padding-top: 28px; }
+}
+@media print {
+  nav.toc { display: none; }
+  .stop { break-inside: avoid; box-shadow: none; }
+  .hidden { display: grid; }
+}
+</style>
+</head>
+<body>
+
+<nav class="toc" aria-label="頁內導覽">
+  <div class="wrap">
+    <a class="back" href="index.html">← 回總覽</a>
+    <a href="#timeline">逐點時間</a>
+    <a href="#youbike">YouBike</a>
+    <a href="#bailout">撤退點</a>
+    <a href="#why">為什麼這樣排</a>
+    <button id="themeBtn" type="button" aria-label="切換深淺色">◐ 深淺色</button>
+  </div>
+</nav>
+
+<header class="hero wrap">
+  <div class="eyebrow">2026 臺北大縱走 · DAY 4 細節</div>
+  <h1>第 5 + 8 段<br>碧山巖 → 劍潭 → 關渡 → 動物園</h1>
+  <p class="lede">一早搭文湖線和小 2區上碧山巖，往劍潭方向走第 5 段，再搭淡水信義線到關渡，騎 YouBike 沿河回動物園。一個人、一天，日期還沒定，平日和假日的差別都列在對應的點。</p>
+  <div class="stats">
+    <div class="stat"><b>06:00</b><span>出門</span></div>
+    <div class="stat"><b>10:35</b><span>劍潭站（估算）</span></div>
+    <div class="stat"><b>14 顆</b><span>寶石</span></div>
+    <div class="stat"><b>15:15</b><span>到家（估算）</span></div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section id="timeline">
+  <h2>逐點時間表</h2>
+  <p class="sub">第 5 段官方 6–7 小時，用你的實測配速（中級段約官方 × 0.65）抓 3.5 小時左右，這個方向整體是下坡。第 8 段約 38 km，抓 3.5 小時。時間都是估算。</p>
+
+  <div class="alert">
+    <strong>最近的路況回報（健行筆記山友與新聞，非官方）</strong>
+    第 5 段：11/21、11/23 都有「樹木倒塌／倒木」回報，位置<span class="unv">未查到</span>。2026/6/28 圓山保齡球館後方山坡土石崩落，當時警方在球館周邊和鄰近登山步道入口拉封鎖線；一篇 2026 年的心得說不確定那條路能不能走，現況<span class="unv">未查到</span>。10/12 留言說文間山的手拿牌遺失、改用紙板。<br>
+    第 8 段：3 月回報臺北橋一帶施工、車道縮減；中山高附近有施工柵欄。8 月回報動物園站附近環狀線南環段施工中。
+  </div>
+
+  <div class="key">
+    <span><i class="pill must">必要</i>行程節點</span>
+    <span><i class="pill pass">必經</i>主線經過的點</span>
+    <span><i class="pill skip">🟢 可選</i>岔路，寶石在主線上</span>
+  </div>
+
+  <p class="sub">寶石是定位感應，2026 認證規則沒有規定順序。下面的「第 N 顆」是照這一天行進方向的先後排，APP 裡的編號可能不同。</p>
+
+  <div id="list">
+    <div class="leg">出發 · 南京三民 → 內湖站 → 碧山巖</div>
+    <ol class="stops">
+      <li class="stop" data-s="must">
+        <time>06:00</time>
+        <div>
+          <div class="stop-head"><h3>出門，南京三民站搭捷運</h3><span class="pill must">必要</span></div>
+          <p>松山新店線往新店方向坐到南京復興站，轉文湖線往南港展覽館方向到內湖站，車程約 30 分（估算）。第 5 段沿途沒有商店，早餐和水在家附近或內湖站周邊超商先買好，水帶 1.5 L 左右。</p>
+        </div>
+      </li>
+      <li class="stop" data-s="must">
+        <time>06:35</time>
+        <div>
+          <div class="stop-head"><h3>「捷運內湖站(內湖)」站搭小 2區 或小 2</h3><span class="pill must">必要</span></div>
+          <ol class="steps">
+            <li>站牌在<b>內湖路二段 411 號對面</b>（上山方向，向北）。下山方向的同名站牌在 482 號對面，搭車前看清楚方向。</li>
+            <li><b>小 2區</b>：每天行駛，起點發車平日 05:10、假日 04:30 起，末班 22:50。</li>
+            <li><b>小 2</b>：只有平日，<b>例假日停駛</b>，04:30–20:00。</li>
+            <li>往上坐 5 站（貿商三村、碧山路口、碧霞宮、圓覺寺(鯉魚山)），在「<b>碧山巖(白石湖吊橋)</b>」下車，站牌在碧山路碧山巖門口。一段票。</li>
+          </ol>
+          <div class="alt">
+            <b>等太久的話</b>
+            公車動態顯示要等 15 分以上，就在內湖站叫計程車或 Uber 上碧山巖，約 3.5 km、8–10 分，車資約 NT$100–160<span class="unv">估算</span>（2020 年紀錄約 100 元）。山區路段在禁停黃線的停靠區也可以隨招隨停。
+          </div>
+          <p class="gem">站序、方向與營運時間查自臺北市公車開放資料（2026/11/28）。資料裡沒有班距，出發前用「台北等公車」看即時到站。等車加車程抓 30 分（估算）。內湖站周邊有超商。</p>
+        </div>
+      </li>
+      <li class="stop" data-s="must">
+        <time>07:05</time>
+        <div>
+          <div class="stop-head"><h3>碧山巖（第 5 段起點）</h3><span class="pill must">必要</span></div>
+          <p>在健行筆記 APP 開啟<b>第 5 段任務</b>，定位常開。</p>
+          <p class="gem">廁所、飲水機（第 5 段唯一有飲水機的地方，依 2020 年紀錄），水在這裡補滿。廟口周邊有攤販和小吃，這麼早有沒有開<span class="unv">未查到</span>。</p>
+        </div>
+      </li>
+    </ol>
+
+    <div class="leg">第 5 段 · 碧山巖 → 劍潭（約 12 km）</div>
+    <ol class="stops">
+      <li class="stop" data-s="pass">
+        <time>07:25</time>
+        <div>
+          <div class="stop-head"><h3>忠勇山蔣公銅像 → 紅色電塔</h3><span class="pill pass">必經</span></div>
+          <p>第 1 顆在忠勇山蔣公銅像到紅色電塔這一帶。2023 年的紀錄寫在紅色電塔附近，2026 年有一篇寫在銅像，另一篇說寶石不在山頂；以 APP 當下顯示為準。往忠勇山這段是長樓梯。</p>
+        </div>
+      </li>
+      <li class="stop" data-s="skip">
+        <time>07:30</time>
+        <div>
+          <div class="stop-head"><h3>忠勇山山頂</h3><span class="pill skip">🟢 可選</span></div>
+          <p>第 1 顆已經跳出來的話，山頂旁邊有小路可以繞。上不上山頂看當下狀況。</p>
+        </div>
+      </li>
+      <li class="stop" data-s="pass">
+        <time>07:45</time>
+        <div>
+          <div class="stop-head"><h3>忠勇山越嶺步道</h3><span class="pill pass">必經</span></div>
+          <p>第 2 顆在越嶺步道上，靠金龍產業道路那一頭。</p>
+        </div>
+      </li>
+      <li class="stop" data-s="pass">
+        <time>08:00</time>
+        <div>
+          <div class="stop-head"><h3>金龍產業道路</h3><span class="pill pass">必經</span></div>
+          <p>這段沒有寶石。車少但車速快，靠邊走。這一帶岔路多，常有人走錯，對照 APP。</p>
+        </div>
+      </li>
+      <li class="stop" data-s="pass">
+        <time>08:30</time>
+        <div>
+          <div class="stop-head"><h3>三點一 · 圓明寺步道 / 金面山步道交會涼亭</h3><span class="pill pass">必經</span></div>
+          <p>第 3 顆在跟金面山步道交會的岔路涼亭。這裡走圓明寺步道；從這個方向來，岔路一側往金面山、一側往文間山，以 APP 軌跡為準。舊指標曾指向論劍亭。</p>
+        </div>
+      </li>
+      <li class="stop" data-s="pass">
+        <time>09:00</time>
+        <div>
+          <div class="stop-head"><h3>鄭成功廟步道</h3><span class="pill pass">必經</span></div>
+          <p>第 4 顆在鄭成功廟步道上。廟方有提供茶水。樹蔭下的石階雨後會滑，這個方向多是下階。</p>
+          <p class="gem">文間山步道入口對面有「銅心米粉寮休息站」，鐵皮棚和椅子（2020 年紀錄，現況<span class="unv">未查到</span>）。</p>
+        </div>
+      </li>
+      <li class="stop" data-s="pass">
+        <time>09:25</time>
+        <div>
+          <div class="stop-head"><h3>文間山 → 貓九山營區 → 劍南路</h3><span class="pill pass">必經</span></div>
+          <p>文間山平台是手拿牌點（10/12 回報手拿牌遺失、改用紙板）。第 5 顆在貓九山營區外的綠色鐵絲網附近。</p>
+        </div>
+      </li>
+      <li class="stop" data-s="pass">
+        <time>09:55</time>
+        <div>
+          <div class="stop-head"><h3>老地方觀機平台</h3><span class="pill pass">必經</span></div>
+          <p>第 6 顆，也有活動柱和手拿牌。有大涼亭。</p>
+          <p class="gem">廁所：一篇 2020 年的紀錄說劍潭親山步道這一段有廁所，確切位置<span class="unv">未查到</span>。</p>
+        </div>
+      </li>
+      <li class="stop" data-s="pass">
+        <time>10:10</time>
+        <div>
+          <div class="stop-head"><h3>2 號崗哨 · 劍潭山三角點</h3><span class="pill pass">必經</span></div>
+          <p>第 7 顆在三角點旁的 2 號崗哨附近。三角點小路窄，指標小，三角點在旁邊角落，容易錯過。之後是往下的連續陡階。</p>
+        </div>
+      </li>
+      <li class="stop" data-s="must">
+        <time>10:35</time>
+        <div>
+          <div class="stop-head"><h3>下山 → 捷運劍潭站（第 5 段終點）</h3><span class="pill must">必要</span></div>
+          <p>確認 APP 顯示第 5 段 7 顆收齊，按「儲存並上傳」結束第 5 段紀錄。</p>
+          <div class="alt">
+            <b>走哪個出口</b>
+            一般的劍潭端登山口在中山北路上、圓山育樂中心（保齡球館）旁。2026/6/28 保齡球館後方山坡崩落，當時鄰近步道入口有拉封鎖線，現在有沒有解除<span class="unv">未查到</span>。從劍潭山三角點往「圓山風景區／中山北路」指標下石階，在中山北路四段的「圓山風景區」牌樓出來，出口旁就是公車站，走幾分鐘到劍潭站。2026 年的健行筆記心得也是走這個出口。到了岔路看現場告示和 APP 軌跡。
+          </div>
+          <p class="gem">劍潭站內有廁所，周邊有超商，可以買第 8 段要帶的水和吃的。</p>
+        </div>
+      </li>
+    </ol>
+
+    <div class="leg">轉乘 · 劍潭站 → 關渡站</div>
+    <ol class="stops">
+      <li class="stop" data-s="must">
+        <time>10:40</time>
+        <div>
+          <div class="stop-head"><h3>淡水信義線往淡水方向到關渡站</h3><span class="pill must">必要</span></div>
+          <p>同一條線直達，坐 10 站，車程約 20 分（估算）。車上可以先開 YouBike App 看關渡一帶的車數。</p>
+        </div>
+      </li>
+    </ol>
+
+    <div class="leg">第 8 段 · 關渡 → 動物園（約 38 km，YouBike）</div>
+    <ol class="stops">
+      <li class="stop" data-s="must">
+        <time>11:05</time>
+        <div>
+          <div class="stop-head"><h3>捷運關渡站租 YouBike</h3><span class="pill must">必要</span></div>
+          <p>出站租車，借好車、上自行車道前在 APP 開啟<b>第 8 段任務</b>。站點與車輛狀況看下面「<a href="#youbike">YouBike</a>」。</p>
+          <p class="gem">關渡宮前有小攤販。在關渡先上廁所、把水補滿，社子島那段沒有補給和廁所<span class="unv">未查到</span>。</p>
+        </div>
+      </li>
+      <li class="stop" data-s="pass">
+        <time>11:20</time>
+        <div>
+          <div class="stop-head"><h3>關渡自然公園一帶</h3><span class="pill pass">必經</span></div>
+          <p>第 1 顆大約在水筆仔最茂密的旁邊，關渡自然公園附近，現場沒有明顯指示牌。</p>
+        </div>
+      </li>
+      <li class="stop" data-s="pass">
+        <time>11:50</time>
+        <div>
+          <div class="stop-head"><h3>社子大橋</h3><span class="pill pass">必經</span></div>
+          <p>手拿牌在橋上社子島方向那一側，牌子很小。上橋的牽引道有坡度，可以下車牽。這段上下橋的方向跟網路上動物園出發的紀錄相反，對照 APP 軌跡。</p>
+        </div>
+      </li>
+      <li class="stop" data-s="pass">
+        <time>12:10</time>
+        <div>
+          <div class="stop-head"><h3>社子島（島頭公園一帶）</h3><span class="pill pass">必經</span></div>
+          <p>第 2 顆在社子島河濱自行車道上，2023 年紀錄說大約在島形「鴨嘴與鴨脖子中間」。島頭公園是淡水河右岸 0.0K。這一段完全沒有遮蔭。</p>
+          <p class="gem">社子島頭公園有廁所和座椅。附近有「社子島島頭公園」「社子島濕地解說小築」兩個 YouBike 站。淡六號疏散門出去是汽車道，沒有單車道。</p>
+        </div>
+      </li>
+      <li class="stop" data-s="pass">
+        <time>12:45</time>
+        <div>
+          <div class="stop-head"><h3>大稻埕碼頭（約 15 km）</h3><span class="pill pass">必經</span></div>
+          <p>第 3 顆在碼頭旁、YouBike 站附近，很好找。到碼頭前是臺北橋施工段，車道縮減、隔板多，放慢。</p>
+          <p class="gem">有廁所、餐飲攤位，YouBike「大稻埕碼頭」站 52 柱。這段如果 APP 有暫停記錄，離開前記得恢復。距離是用動物園起算約 23 km 反推（估算）。</p>
+        </div>
+      </li>
+      <li class="stop" data-s="pass">
+        <time>13:05</time>
+        <div>
+          <div class="stop-head"><h3>華江雁鴨自然公園 → 華江橋</h3><span class="pill pass">必經</span></div>
+          <p>第 4 顆在華江雁鴨自然公園旁、離華江橋約 200 m。</p>
+        </div>
+      </li>
+      <li class="stop" data-s="pass">
+        <time>13:20</time>
+        <div>
+          <div class="stop-head"><h3>華中橋 → 馬場町紀念公園 → 古亭河濱</h3><span class="pill pass">必經</span></div>
+          <p>第 5 顆約在華中橋下、差 50 m 左右（2023 年紀錄；另一份紀錄寫在馬場町租借站附近）。馬場町公園一帶是手拿牌點。</p>
+        </div>
+      </li>
+      <li class="stop" data-s="pass">
+        <time>13:45</time>
+        <div>
+          <div class="stop-head"><h3>溪仔口（新店溪接景美溪）</h3><span class="pill pass">必經</span></div>
+          <p>這段沒有寶石。古亭過去的板橋／古亭岔路、水源快速道路岔路口指標不明顯，照 APP 軌跡轉進景美溪。</p>
+          <p class="gem">新店溪段有休息站可買冰棒、裝水（2026/5 紀錄，確切位置<span class="unv">未查到</span>）。河濱販賣機大多用 LINE Pay。</p>
+        </div>
+      </li>
+      <li class="stop" data-s="pass">
+        <time>14:05</time>
+        <div>
+          <div class="stop-head"><h3>景美河濱公園 → 北新橋</h3><span class="pill pass">必經</span></div>
+          <p>第 6 顆在景美河濱公園旁、離北新橋約 200 m，大約是流動廁所的位置。</p>
+          <p class="gem">附近有景美國小、景美運動公園的 YouBike 站。溪洲疏散門一帶有販賣機（2026/8 紀錄）。</p>
+        </div>
+      </li>
+      <li class="stop" data-s="pass">
+        <time>14:25</time>
+        <div>
+          <div class="stop-head"><h3>萬壽橋</h3><span class="pill pass">必經</span></div>
+          <p>第 7 顆在萬壽橋一帶。2026/5 的紀錄說要穿過萬壽橋下感應，再回到牽引道；2023 年紀錄說在景美溪右岸自行車道上就感應得到。這裡路線會上橋換岸，容易騎錯，對照 APP 軌跡。</p>
+        </div>
+      </li>
+      <li class="stop" data-s="must">
+        <time>14:35</time>
+        <div>
+          <div class="stop-head"><h3>捷運動物園站還車（第 8 段終點）</h3><span class="pill must">必要</span></div>
+          <p>確認 APP 顯示第 8 段 7 顆收齊，按「儲存並上傳」結束第 8 段紀錄。還車站點看下面「<a href="#youbike">YouBike</a>」。</p>
+          <p class="gem">動物園站內有廁所。</p>
+        </div>
+      </li>
+    </ol>
+
+    <div class="leg">回家</div>
+    <ol class="stops">
+      <li class="stop" data-s="must">
+        <time>14:40</time>
+        <div>
+          <div class="stop-head"><h3>動物園站 → 南京三民站</h3><span class="pill must">必要</span></div>
+          <p>文湖線往南港展覽館方向坐到南京復興站，轉松山新店線往松山方向到南京三民站，車程約 35 分（估算），15:15 左右到家。</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section id="youbike">
+  <h2>YouBike 借還與費用</h2>
+  <p class="sub">站點與車輛數取自臺北市 YouBike 2.0 即時資料，2026/11/28（六）兩個快照：09:38 與 15:09，只代表那個時間點。</p>
+  <ol class="stops">
+    <li class="stop" data-s="must">
+      <time>借車</time>
+      <div>
+        <div class="stop-head"><h3>關渡站附近</h3><span class="pill must">必要</span></div>
+        <ol class="steps">
+          <li><b>捷運關渡站(1號出口)</b>（大度路三段 270 巷／立功街 55 巷）：99 柱。09:38 快照空位 81，15:09 快照 0 台。</li>
+          <li><b>捷運關渡站(2號出口)</b>（2 號出口外人行道）：22 柱。09:38 快照空位 16，15:09 快照 0 台。</li>
+          <li><b>關渡國中</b>（知行路 210 巷 16 號前對側）：24 柱，15:09 快照 22 台。</li>
+          <li><b>關渡自然公園</b>（關渡路 68 號對面）：35 柱，15:09 快照 20 台，就在第 1 顆附近。</li>
+          <li><b>關渡宮</b>（知行路 360 號旁）：62 柱，15:09 快照 13 台；<b>關渡碼頭</b>：99 柱，15:09 快照 5 台。</li>
+        </ol>
+        <p class="gem">早上 11 點左右關渡站的車數<span class="unv">未查到</span>，下午快照兩站都是空的。在劍潭搭車時先用 YouBike App 看，沒車就往關渡國中或關渡自然公園。</p>
+      </div>
+    </li>
+    <li class="stop" data-s="must">
+      <time>還車</time>
+      <div>
+        <div class="stop-head"><h3>動物園站附近</h3><span class="pill must">必要</span></div>
+        <ol class="steps">
+          <li><b>捷運動物園站</b>（新光路二段 30 號對面）：57 柱。15:09 快照空位 51。</li>
+          <li><b>捷運動物園站(2號出口)</b>（新光路二段 28 號前）：39 柱。15:09 快照顯示暫停營運、空位 0。</li>
+          <li><b>貓空纜車動物園站</b>（新光路二段 8 號對側）：48 柱。15:09 快照空位 47。</li>
+        </ol>
+        <p class="gem">動物園一帶車常被借光，空位通常多。萬壽橋過來前還有「政大水岸電梯」（10 柱）、「政大一街口」（14 柱）可以還。</p>
+      </div>
+    </li>
+    <li class="stop" data-s="pass">
+      <time>費用</time>
+      <div>
+        <div class="stop-head"><h3>YouBike 2.0 會員計費（臺北市）</h3><span class="pill pass">必經</span></div>
+        <ol class="steps">
+          <li>前 30 分鐘免費（臺北市補助，限會員，單次租車不適用）。</li>
+          <li>4 小時內每 30 分 10 元；4–8 小時每 30 分 20 元；超過 8 小時每 30 分 40 元。不足 30 分以 30 分計。</li>
+          <li>騎 3 小時約 50 元，3.5 小時約 60 元。騎超過 4 小時費率加倍。</li>
+          <li>電輔車 2.0E：前 2 小時每 30 分 20 元，之後每 30 分 40 元，沒有 30 分鐘免費。</li>
+        </ol>
+        <p class="gem">悠遊卡餘額先加到 100 元以上。</p>
+      </div>
+    </li>
+    <li class="stop" data-s="pass">
+      <time>長騎</time>
+      <div>
+        <div class="stop-head"><h3>38 km 長途注意</h3><span class="pill pass">必經</span></div>
+        <ol class="steps">
+          <li>寶石是用定位感應，沒有規定順序（2026 認證規則），從關渡往動物園騎一樣收得到。</li>
+          <li>寶石畫面只會跳出約 15 秒，順手截圖。</li>
+          <li>一般車騎長距離偏累，有人中途在大稻埕換電輔車；電輔車在大稻埕很搶手，電量也要留意。</li>
+          <li>週末河濱人多，有跑者、行人，不並排騎。冬天北部多吹東北季風，河濱實際風向對這個方向是順風還是逆風<span class="unv">未查到</span>，出發前看一下風向。</li>
+          <li>河濱少遮蔭，防曬、帶水；行動糧放在隨手拿得到的地方。</li>
+        </ol>
+      </div>
+    </li>
+  </ol>
+</section>
+
+<section id="bailout">
+  <h2>撤退點</h2>
+  <p class="sub">照估算 14:35 就騎完，離 17:05 左右的日落還有兩個多小時。下面是中途想收的時候可以走的地方。</p>
+  <ol class="stops">
+    <li class="stop" data-s="must">
+      <time>第 5 段</time>
+      <div>
+        <div class="stop-head"><h3>中途下山</h3><span class="pill must">必要</span></div>
+        <ol class="steps">
+          <li><b>金龍產業道路</b>：沿產業道路下到內湖市區，路線與距離<span class="unv">未查到</span>。</li>
+          <li><b>三點一（金面山交會）</b>：走金面山步道下到環山路，往捷運西湖站，距離<span class="unv">未查到</span>。</li>
+          <li><b>劍南路 / 老地方</b>：沿劍南路下到大直，走到捷運劍南路站，距離<span class="unv">未查到</span>。</li>
+        </ol>
+        <p class="gem">全程手機有訊號，叫車方便。</p>
+      </div>
+    </li>
+    <li class="stop" data-s="must">
+      <time>第 8 段</time>
+      <div>
+        <div class="stop-head"><h3>河濱旁的捷運站</h3><span class="pill must">必要</span></div>
+        <ol class="steps">
+          <li><b>關渡到社子島</b>：這段離捷運站較遠，只能騎回關渡或往前到大稻埕，或出堤防找公車。</li>
+          <li><b>淡水河段</b>：大稻埕碼頭出淡五號水門，往捷運北門站或大橋頭站（估算約 1 km）。</li>
+          <li><b>新店溪段</b>：捷運古亭站（古亭河濱）、捷運公館站（水源疏散門一帶）。</li>
+          <li><b>景美溪段</b>：捷運景美站（景美河濱公園一帶出堤防，估算約 1 km）。</li>
+        </ol>
+        <p class="gem">任一站都能還車。距離是看地圖估的，沒實際量過。從這些站回南京三民都在一次轉乘內。</p>
+      </div>
+    </li>
+  </ol>
+</section>
+
+<section id="why">
+  <h2>為什麼這樣排</h2>
+  <p class="sub">原本這頁是劍潭往碧山巖走、動物園往關渡騎，這裡兩段都反過來。</p>
+  <div class="alt"><b>從碧山巖高處出發</b>坐公車上到碧山巖再起步，往劍潭方向整體是下坡，最後是往下的陡階。</div>
+  <div class="alt"><b>在關渡借車</b>動物園一帶的站常常沒車，11/28（六）09:38 快照「捷運動物園站」剩 2 台、2 號出口 0 台；在動物園還車就看空位，空位通常多。關渡站下午快照也是空的，但旁邊幾站還有車，見上面「<a href="#youbike">YouBike</a>」。</div>
+  <div class="alt"><b>劍潭和關渡在同一條線</b>走完第 5 段在劍潭站上車，淡水信義線坐到關渡，中間沒有轉乘。動物園回南京三民也只在南京復興轉一次。</div>
+  <div class="alt"><b>比較早結束</b>06:00 出門，估算 14:35 騎完、15:15 左右到家，離日落還遠。</div>
+</section>
+
+</main>
+
+<footer class="wrap">
+  <p>整理於 2026/11/28。寶石位置主要參考 2023–2026 年山友紀錄，2026 年實際位置與路況以健行筆記 APP 當天顯示為準。公車站序查自臺北市公車開放資料，YouBike 站點查自臺北市 YouBike 2.0 即時資料。<a href="index.html">回到大縱走總覽 →</a></p>
+  <p>參考：<a href="https://hiking.biji.co/index.php?q=trail&amp;act=detail&amp;id=1469">健行筆記：第五段路線與回報</a>、<a href="https://hiking.biji.co/index.php?act=info&amp;q=review&amp;review_id=48283">健行筆記：第五段心得（2026）</a>、<a href="https://udn.com/news/story/7320/9594370">聯合新聞網：圓山保齡球館後方土石崩落（2026/6）</a>、<a href="https://imnanako.pixnet.net/blog/post/33772187">第五段寶石與手拿牌位置（2023）</a>、<a href="https://stellaclife.com/taipei-grand-trail-route-5/">第五段交通與補給</a>、<a href="https://hiking.biji.co/index.php?q=news&amp;act=info&amp;id=24220">健行筆記：第八段攻略</a>、<a href="https://chu246.blogspot.com/2023/03/blog-post.html">第八段寶石位置（2023）</a>、<a href="https://vocus.cc/article/6a0868eafd8978000143debf">第八段紀錄（2026/5）</a>、<a href="https://ballenf.pixnet.net/blog/posts/935769235955458045">第八段紀錄（2026/8）</a>、<a href="https://threethree.tw/202605032130/">三三行旅：第八段</a>、<a href="https://www.youbike.com.tw/region/taipei/rate/">YouBike 臺北市費率</a>、<a href="https://ebus.gov.taipei/">大臺北公車</a>。</p>
+</footer>
+
+<script>
+(function () {
+  const root = document.documentElement;
+  try { const t = localStorage.getItem("tgt-theme"); if (t) root.dataset.theme = t; } catch (e) {}
+  document.getElementById("themeBtn").addEventListener("click", () => {
+    const cur = root.dataset.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    const next = cur === "dark" ? "light" : "dark";
+    root.dataset.theme = next;
+    try { localStorage.setItem("tgt-theme", next); } catch (e) {}
+  });
+})();
+</script>
+</body>
+</html>

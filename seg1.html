@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第 1 段逐點行程</title>
+<meta name="description" content="2026 臺北大縱走第 1 段（關渡 → 二子坪）逐點時間表與寶石位置">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f6f4ef; --surface: #ffffff; --surface-2: #efece4; --text: #1f2421; --muted: #5f675f;
+  --line: #ddd8cc; --accent: #2f6b4f; --warn-bg: #fff4dc; --warn-line: #e2b04a; --warn-text: #6b4a05;
+  --danger: #b5432f; --d2: #c2532f;
+  --must: #5f675f; --skip: #2f8a4f; --skip-bg: #e6f3ea; --maybe: #a26a00; --maybe-bg: #fff4dc;
+  --shadow: 0 1px 2px rgba(0,0,0,.04), 0 4px 16px rgba(0,0,0,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #141716; --surface: #1c201e; --surface-2: #242926; --text: #e8ebe7; --muted: #9ba59e;
+    --line: #333a36; --accent: #6fc29a; --warn-bg: #2e2716; --warn-line: #a17c2c; --warn-text: #f0d79a;
+    --danger: #ef7d68; --d2: #ee7f58;
+    --must: #9ba59e; --skip: #6fc29a; --skip-bg: #1c2e24; --maybe: #f0c060; --maybe-bg: #2e2716;
+    --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #141716; --surface: #1c201e; --surface-2: #242926; --text: #e8ebe7; --muted: #9ba59e;
+  --line: #333a36; --accent: #6fc29a; --warn-bg: #2e2716; --warn-line: #a17c2c; --warn-text: #f0d79a;
+  --danger: #ef7d68; --d2: #ee7f58;
+  --must: #9ba59e; --skip: #6fc29a; --skip-bg: #1c2e24; --maybe: #f0c060; --maybe-bg: #2e2716;
+  --shadow: none;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font-family: "Noto Sans TC", system-ui, -apple-system, "PingFang TC", "Microsoft JhengHei", sans-serif;
+  line-height: 1.7; font-size: 16px;
+}
+a { color: var(--accent); }
+.wrap { max-width: 980px; margin: 0 auto; padding: 0 16px; }
+
+nav.toc { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+nav.toc .wrap { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; }
+nav.toc a { text-decoration: none; color: var(--muted); font-size: 14px; font-weight: 500; padding: 12px 10px; white-space: nowrap; }
+nav.toc a:hover { color: var(--text); }
+nav.toc a.back { color: var(--accent); font-weight: 700; }
+#themeBtn { margin-left: auto; background: none; border: 0; color: var(--muted); font: inherit; font-size: 14px; cursor: pointer; padding: 12px 6px; white-space: nowrap; }
+
+header.hero { padding: 40px 0 20px; }
+.eyebrow { font-size: 13px; letter-spacing: .12em; color: var(--muted); font-weight: 700; }
+h1 { font-size: clamp(28px, 5.5vw, 42px); line-height: 1.25; margin: 6px 0 12px; font-weight: 900; }
+.lede { color: var(--muted); max-width: 660px; margin: 0; }
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 24px; }
+.stat { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; box-shadow: var(--shadow); }
+.stat b { display: block; font-size: 24px; font-weight: 900; line-height: 1.25; font-variant-numeric: tabular-nums; }
+.stat span { font-size: 13px; color: var(--muted); }
+.stat.hot b { color: var(--skip); }
+
+section { padding: 32px 0 8px; scroll-margin-top: 48px; }
+h2 { font-size: 24px; font-weight: 900; margin: 0 0 6px; }
+.sub { color: var(--muted); margin: 0 0 18px; font-size: 15px; }
+
+.alert { background: var(--warn-bg); border: 1px solid var(--warn-line); color: var(--warn-text); border-radius: 12px; padding: 14px 16px; margin-bottom: 14px; font-size: 15px; }
+.alert strong { display: block; margin-bottom: 2px; }
+
+/* status pills */
+.pill { display: inline-flex; align-items: center; gap: 4px; font-size: 12.5px; font-weight: 700; border-radius: 999px; padding: 1px 10px; white-space: nowrap; border: 1px solid currentColor; }
+.pill.must { color: var(--must); }
+.pill.pass { color: var(--must); border-style: dashed; }
+.pill.skip { color: var(--skip); background: var(--skip-bg); border-color: transparent; }
+.pill.maybe { color: var(--maybe); background: var(--maybe-bg); border-color: transparent; }
+.key { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-bottom: 18px; font-size: 14px; color: var(--muted); }
+.key span { display: inline-flex; align-items: center; gap: 8px; }
+
+/* timeline */
+.leg { font-size: 13px; font-weight: 900; letter-spacing: .08em; color: var(--d2); margin: 22px 0 8px 2px; }
+.leg:first-child { margin-top: 0; }
+.stops { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.stop { display: grid; grid-template-columns: 64px 1fr; gap: 14px; background: var(--surface); border: 1px solid var(--line); border-left: 6px solid var(--line); border-radius: 14px; padding: 14px 18px; box-shadow: var(--shadow); }
+.stop[data-s="skip"] { border-left-color: var(--skip); }
+.stop[data-s="maybe"] { border-left-color: var(--maybe); }
+.stop[data-s="must"], .stop[data-s="pass"] { border-left-color: var(--d2); }
+.stop time { font-weight: 900; font-size: 18px; font-variant-numeric: tabular-nums; line-height: 1.5; }
+.stop-head { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
+.stop h3 { margin: 0; font-size: 17px; font-weight: 700; line-height: 1.5; }
+.stop p { margin: 6px 0 0; font-size: 15px; }
+.stop .save { display: inline-block; margin-top: 8px; font-size: 13px; font-weight: 700; color: var(--skip); background: var(--skip-bg); border-radius: 8px; padding: 2px 10px; }
+.stop .gem { font-size: 13px; color: var(--muted); margin-top: 8px; }
+.steps { margin: 6px 0 0; padding-left: 20px; font-size: 15px; }
+.steps li { margin: 3px 0; }
+.alt { margin-top: 10px; background: var(--surface-2); border-radius: 10px; padding: 10px 12px; font-size: 14.5px; }
+.alt b { display: block; font-size: 14px; margin-bottom: 2px; }
+.stop .fix { margin-top: 8px; font-size: 13.5px; padding: 8px 10px; border-radius: 8px; background: var(--warn-bg); color: var(--warn-text); }
+.hidden { display: none; }
+.unv { font-size: 12px; font-weight: 700; color: var(--warn-text); background: var(--warn-bg); border-radius: 6px; padding: 0 6px; margin-left: 4px; white-space: nowrap; }
+
+
+footer { padding: 36px 0 56px; color: var(--muted); font-size: 13px; }
+
+@media (max-width: 720px) {
+  .stats { grid-template-columns: repeat(2, 1fr); }
+  .stop { grid-template-columns: 1fr; gap: 2px; padding: 12px 14px; }
+  .stop time { font-size: 16px; }
+    header.hero { padding-top: 28px; }
+}
+@media print {
+  nav.toc { display: none; }
+  .stop { break-inside: avoid; box-shadow: none; }
+  .hidden { display: grid; }
+}
+</style>
+</head>
+<body>
+
+<nav class="toc" aria-label="頁內導覽">
+  <div class="wrap">
+    <a class="back" href="index.html">← 回總覽</a>
+    <a href="#timeline">逐點時間</a>
+    <a href="#bail">撤退點</a>
+    <button id="themeBtn" type="button" aria-label="切換深淺色">◐ 深淺色</button>
+  </div>
+</nav>
+
+<header class="hero wrap">
+  <div class="eyebrow">2026 臺北大縱走 · 第 1 段細節</div>
+  <h1>第 1 段<br>捷運關渡站 → 二子坪</h1>
+  <p class="lede">一個人單走一天的逐點時間，標出每顆寶石、補水和廁所的位置。官方參考 7–8 小時，照第 6–7 段實測的 ×0.65 再加 30 分鐘緩衝，抓 5–5.5 小時。</p>
+  <div class="stats">
+    <div class="stat"><b>06:00</b><span>出門搭首班捷運</span></div>
+    <div class="stat"><b>~12:15</b><span>二子坪遊客服務站</span></div>
+    <div class="stat"><b>7 顆</b><span>寶石</span></div>
+    <div class="stat"><b>1,500 ml</b><span>出門帶水量（清天宮可補）</span></div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section id="timeline">
+  <h2>逐點時間表</h2>
+  <p class="sub">卡片左邊的色條：綠色＝可選岔路、橘紅＝主線。時間都是估算，前半段是柏油路和緩坡，比較好追時間；清天宮之後是連續石階上坡，會慢下來。</p>
+
+  <div class="alert">
+    <strong>出發前查兩件事</strong>
+    9/8 有 Hikingbook 山友回報「三慈宮一帶封路」，在路線哪一段<span class="unv">未查到</span>，現在是否還封著也<span class="unv">未查到</span>。出發前一晚看健行筆記第一段的最新回報和大縱走官網公告；遇到封路照現場改道指示走，APP 上的寶石位置以當天顯示為準。另外 11/3 有倒木回報、10/25 有颱風封路回報，地點都沒寫。
+  </div>
+
+  <div class="key">
+    <span><i class="pill must">必要</i>行程節點</span>
+    <span><i class="pill pass">必經</i>主線經過的點</span>
+    <span><i class="pill skip">🟢 可選</i>岔路，寶石在主線上</span>
+  </div>
+
+  <div id="list">
+    <div class="leg">出發</div>
+    <ol class="stops">
+      <li class="stop" data-s="must">
+        <time>06:00</time>
+        <div>
+          <div class="stop-head"><h3>捷運南京三民站 → 關渡站</h3><span class="pill must">必要</span></div>
+          <ol class="steps">
+            <li>南京三民站搭<b>松山新店線（往新店）</b>，坐 4 站到<b>中山站</b>。</li>
+            <li>中山站轉<b>淡水信義線（往淡水）</b>，坐 14 站到<b>關渡站</b>。</li>
+          </ol>
+          <p class="gem">首班車約 06:00 從松山站發車，南京三民是第 2 站，實際時刻<span class="unv">未查到</span>，出發前用「台北捷運 Go」確認。全程約 45 分鐘（估算）。路線沒有便利商店，早餐和行動糧在關渡站附近便利商店買齊。</p>
+        </div>
+      </li>
+      <li class="stop" data-s="must">
+        <time>06:55</time>
+        <div>
+          <div class="stop-head"><h3>捷運關渡站（起點）</h3><span class="pill must">必要</span></div>
+          <p>出站打開第 1 段離線任務，定位常開。12 月日出約 06:30，天已經亮了。</p>
+        </div>
+      </li>
+    </ol>
+
+    <div class="leg">前段 · 關渡站 → 忠義山 → 貴子坑</div>
+    <ol class="stops">
+      <li class="stop" data-s="pass">
+        <time>07:10</time>
+        <div>
+          <div class="stop-head"><h3>大度路／學園路 → 北藝大校門</h3><span class="pill pass">必經</span></div>
+          <p>沿大馬路旁的紅磚人行道走，經過臺北城市科技大學一帶，再從學園路上北藝大。</p>
+          <p class="gem">寶石 1：2023 年的寶石在城市科技大學附近大馬路轉彎處，今年位置<span class="unv">未查到</span>，看 APP。</p>
+        </div>
+      </li>
+      <li class="stop" data-s="pass">
+        <time>07:35</time>
+        <div>
+          <div class="stop-head"><h3>忠義山步道口（楓丹白露）</h3><span class="pill pass">必經</span></div>
+          <p>從北藝大上方進步道。<b>手拿牌</b>在「柳暗花明又一村」導覽牌旁。</p>
+          <p>上去是整段最陡的原始石頭路，有拉繩，雨後很滑。</p>
+        </div>
+      </li>
+      <li class="stop" data-s="pass">
+        <time>08:10</time>
+        <div>
+          <div class="stop-head"><h3>忠義山 → 大墓園 → 吳仔厝</h3><span class="pill pass">必經</span></div>
+          <p>忠義山海拔 233 m，可以看到觀音山和淡水河。之後沿墓園旁的小徑往吳仔厝，吳仔厝有一道鐵門，山友可以通行。</p>
+          <p class="gem">寶石 2：2023 年的寶石在大墓園旁約 50 m，今年位置<span class="unv">未查到</span>，看 APP。</p>
+        </div>
+      </li>
+      <li class="stop" data-s="pass">
+        <time>08:50</time>
+        <div>
+          <div class="stop-head"><h3>國華球場 → 貴子坑拓印亭</h3><span class="pill pass">必經</span></div>
+          <p>吳仔厝到貴子坑約 1 km 是柏油路和社區巷弄，幾乎沒有遮蔭。拓印亭是「北」字活動柱。</p>
+          <p class="gem">寶石 3：2023 年的寶石在拓印台前約 50 m，今年位置<span class="unv">未查到</span>，看 APP。貴子坑水土保持園區有沒有廁所和飲水機<span class="unv">未查到</span>。</p>
+        </div>
+      </li>
+      <li class="stop" data-s="skip">
+        <time>—</time>
+        <div>
+          <div class="stop-head"><h3>貴子坑露營場</h3><span class="pill skip">🟢 可選</span></div>
+          <p>官網標示的岔路（貴子坑步道 → 露營場），露營要先登記。這裡沒有寶石。</p>
+        </div>
+      </li>
+    </ol>
+
+    <div class="leg">中段 · 貴子坑 → 清天宮</div>
+    <ol class="stops">
+      <li class="stop" data-s="pass">
+        <time>09:20</time>
+        <div>
+          <div class="stop-head"><h3>貴子坑步道 → 社區巷弄</h3><span class="pill pass">必經</span></div>
+          <p>貴子坑步道是平緩的人工步道，有遮蔭。之後穿過住宅區小巷，岔路很多，指標容易錯過，照 APP 的離線軌跡和路標走。</p>
+        </div>
+      </li>
+      <li class="stop" data-s="pass">
+        <time>10:00</time>
+        <div>
+          <div class="stop-head"><h3>清天宮</h3><span class="pill pass">必經</span></div>
+          <p>寶石 4。入口在馬路對面，廟不大，抬頭找路標比較容易看到。</p>
+          <p>有<b>廁所和飲水機</b>（2025 年心得），這裡補水到滿。廟前有大榕樹，天氣好可以看到觀音山。</p>
+          <p class="gem">廟前「清天宮」站是小 6 的終點站，是撤退點，見下方。</p>
+        </div>
+      </li>
+    </ol>
+
+    <div class="leg">後段 · 清天宮 → 面天坪 → 二子坪</div>
+    <ol class="stops">
+      <li class="stop" data-s="pass">
+        <time>10:15</time>
+        <div>
+          <div class="stop-head"><h3>大屯連峰步道（竹林石階）</h3><span class="pill pass">必經</span></div>
+          <p>整段最長的連續上坡石階，兩旁是竹林，沒風的時候很悶。這段沒有補給，也沒有公車。</p>
+        </div>
+      </li>
+      <li class="stop" data-s="pass">
+        <time>11:15</time>
+        <div>
+          <div class="stop-head"><h3>面天坪涼亭</h3><span class="pill pass">必經</span></div>
+          <p>寶石 5。第 2 段往大屯西峰的路在這裡岔開，第 1 段往二子坪。</p>
+          <div class="fix">11/8 心得：面天坪往二子坪有「左往二子坪」和「右往梓園」兩條，最後會接到同一個路口。左邊青苔很滑，作者建議走右邊。寶石 6 在哪一條上<span class="unv">未查到</span>，選路前先看 APP。</div>
+        </div>
+      </li>
+      <li class="stop" data-s="pass">
+        <time>11:40</time>
+        <div>
+          <div class="stop-head"><h3>大屯坪步道叉路口</h3><span class="pill pass">必經</span></div>
+          <p>寶石 6。</p>
+        </div>
+      </li>
+      <li class="stop" data-s="pass">
+        <time>11:55</time>
+        <div>
+          <div class="stop-head"><h3>二子坪遊憩區（生態池）</h3><span class="pill pass">必經</span></div>
+          <p>寶石 7 在遊憩區廁所。<b>手拿牌</b>在二子坪步道生態池旁。有廁所。</p>
+        </div>
+      </li>
+      <li class="stop" data-s="must">
+        <time>12:15</time>
+        <div>
+          <div class="stop-head"><h3>二子坪遊客服務站（終點）</h3><span class="pill must">必要</span></div>
+          <p>遊憩區到服務站約 1.2 km，是平緩的碎石路，第 2 段起點也走這段。確認 APP 顯示第 1 段 7 顆收齊，結束任務。</p>
+          <p>服務站有<b>飲水機、廁所、販賣機、小賣店</b>，沒有熱食。</p>
+          <p class="gem">寶石 4–7 的位置來自網路上的 2026 走法筆記，寶石 1–3 是照 2023 年位置推的，都以 APP 當天顯示為準。</p>
+        </div>
+      </li>
+    </ol>
+
+    <div class="leg">回家</div>
+    <ol class="stops">
+      <li class="stop" data-s="must">
+        <time>12:25</time>
+        <div>
+          <div class="stop-head"><h3>二子坪 → 陽明山總站 → 劍潭 → 南京三民</h3><span class="pill must">必要</span></div>
+          <ol class="steps">
+            <li>服務站旁的「<b>二子坪</b>」公車站搭 <b>108區（往陽明山）</b>，二子坪是起站，坐 10 站到「<b>陽明山總站</b>」。</li>
+            <li>「陽明山總站」轉 <b>紅 5（往捷運劍潭站）</b>，坐 34 站到「<b>捷運劍潭站(中山)</b>」。</li>
+            <li>劍潭站搭淡水信義線（往象山）4 站到中山站，轉松山新店線（往松山）4 站到南京三民站。</li>
+          </ol>
+          <div class="alt">
+            <b>108區 等太久：搭 108</b>
+            同一個「二子坪」站也有 108，但 108 是單向環狀，從二子坪往小油坑、冷水坑、擎天崗繞一圈才回總站，要坐 15 站，比 108區 久很多。
+          </div>
+          <div class="alt">
+            <b>紅 5 的替代：260（往東園）</b>
+            陽明山總站搭 260，坐 30 站到「捷運士林站(中山)」，或 33 站到「捷運劍潭站(中山)」。260 班次比紅 5 少，陽明山發車的平日末班 16:20。
+          </div>
+          <p class="gem">站序查自臺北市公車開放資料（2026/11/28）。108區 首末班 07:40／15:40，資料沒寫這是總站還是二子坪發車；假日 10–20 分一班，平日班距資料沒寫，總覽頁記的是約 40 分一班。平日降雨機率 ≥70% 或低溫特報時 108區 停駛，這時改搭 108。108 平日 30–40 分、假日 20–30 分一班，總站發車 07:00–17:30。紅 5 平日離峰、假日 12–15 分一班。車程都<span class="unv">未查到</span>，到家大約 14:00（估算）。用「台北等公車」看即時到站。</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section id="bail">
+  <h2>撤退點</h2>
+  <p class="sub">12 月日落約 17:05，照這份時間表在中午前後就會到終點，晚出發或走得慢也還有空間。</p>
+  <ol class="stops">
+    <li class="stop" data-s="must">
+      <time>前段</time>
+      <div>
+        <div class="stop-head"><h3>北藝大 → 捷運關渡站</h3></div>
+        <p>「北藝大校門口」站有紅 35、紅 55 回捷運關渡站。</p>
+      </div>
+    </li>
+    <li class="stop" data-s="must">
+      <time>貴子坑</time>
+      <div>
+        <div class="stop-head"><h3>貴子坑水土保持園區 → 劍潭</h3></div>
+        <p>「貴子坑水土保持園區」是 218 的起站，坐 26 站到「捷運劍潭站(中山)」，或 7 站到「新北投」轉捷運。這個站離拓印亭多遠<span class="unv">未查到</span>。</p>
+      </div>
+    </li>
+    <li class="stop" data-s="must">
+      <time>清天宮</time>
+      <div>
+        <div class="stop-head"><h3>清天宮 → 捷運北投站</h3></div>
+        <p>「清天宮」是小 6 的終點站，回程坐 27 站到「捷運北投站(北投)」。首末班 05:40–23:00，班距<span class="unv">未查到</span>。有山友筆記記下午班次約 16:37、17:05、17:35、18:05，是不是今年的時刻<span class="unv">未查到</span>。</p>
+        <p class="gem">過了清天宮，到二子坪之前沒有公車可以搭。</p>
+      </div>
+    </li>
+    <li class="stop" data-s="must">
+      <time>終點</time>
+      <div>
+        <div class="stop-head"><h3>二子坪</h3></div>
+        <p>108區 末班 15:40；錯過的話 108 總站末班 17:30，從二子坪繞一圈回總站。</p>
+      </div>
+    </li>
+  </ol>
+</section>
+
+</main>
+
+<footer class="wrap">
+  <p>整理於 2026/11/28。寶石位置與路況以健行筆記 APP 當天顯示為準。資料來源：<a href="https://hiking.biji.co/index.php?q=trail&act=detail&id=1465" target="_blank" rel="noopener">健行筆記第一段路線與回報</a>、<a href="https://taipeigrandtrail.gov.taipei/News_Content.aspx?n=C94E32183886B2B7&sms=0D4775CC3E9CCAF5&s=1028631895318231" target="_blank" rel="noopener">臺北大縱走官網第一段</a>、<a href="https://en-us.hikingbook.net/posts/%E8%87%BA%E5%8C%97%E5%A4%A7%E7%B8%B1%E8%B5%B0%E5%85%A8%E6%94%BB%E7%95%A5" target="_blank" rel="noopener">Hikingbook 全攻略</a>、<a href="https://kevin1566.synology.me/phpbb/viewtopic.php?t=1813" target="_blank" rel="noopener">2026 走法筆記（寶石 4–7）</a>、<a href="https://chu246.blogspot.com/2023/04/blog-post.html" target="_blank" rel="noopener">2023 第一段寶石位置</a>、<a href="https://threethree.tw/202607261800/" target="_blank" rel="noopener">三三行旅第一段</a>、<a href="https://hiking.biji.co/index.php?q=review&act=info&review_id=48294" target="_blank" rel="noopener">健行筆記八段攻略（手拿牌）</a>、臺北市公車開放資料。<a href="index.html">回到大縱走總覽 →</a></p>
+</footer>
+
+<script>
+(function () {
+  const root = document.documentElement;
+  try { const t = localStorage.getItem("tgt-theme"); if (t) root.dataset.theme = t; } catch (e) {}
+  document.getElementById("themeBtn").addEventListener("click", () => {
+    const cur = root.dataset.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    const next = cur === "dark" ? "light" : "dark";
+    root.dataset.theme = next;
+    try { localStorage.setItem("tgt-theme", next); } catch (e) {}
+  });
+})();
+</script>
+</body>
+</html>

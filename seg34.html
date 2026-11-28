@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第 3–4 段逐點行程</title>
+<meta name="description" content="2026 臺北大縱走第 3 + 4 段逐點時間表、寶石位置、補給與撤退點">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f6f4ef; --surface: #ffffff; --surface-2: #efece4; --text: #1f2421; --muted: #5f675f;
+  --line: #ddd8cc; --accent: #2f6b4f; --warn-bg: #fff4dc; --warn-line: #e2b04a; --warn-text: #6b4a05;
+  --danger: #b5432f; --d1: #1f8a7a; --d3: #6d4fb3;
+  --must: #5f675f; --skip: #2f8a4f; --skip-bg: #e6f3ea; --maybe: #a26a00; --maybe-bg: #fff4dc;
+  --shadow: 0 1px 2px rgba(0,0,0,.04), 0 4px 16px rgba(0,0,0,.05);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #141716; --surface: #1c201e; --surface-2: #242926; --text: #e8ebe7; --muted: #9ba59e;
+    --line: #333a36; --accent: #6fc29a; --warn-bg: #2e2716; --warn-line: #a17c2c; --warn-text: #f0d79a;
+    --danger: #ef7d68; --d1: #43c0ad; --d3: #a68cf0;
+    --must: #9ba59e; --skip: #6fc29a; --skip-bg: #1c2e24; --maybe: #f0c060; --maybe-bg: #2e2716;
+    --shadow: none;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #141716; --surface: #1c201e; --surface-2: #242926; --text: #e8ebe7; --muted: #9ba59e;
+  --line: #333a36; --accent: #6fc29a; --warn-bg: #2e2716; --warn-line: #a17c2c; --warn-text: #f0d79a;
+  --danger: #ef7d68; --d1: #43c0ad; --d3: #a68cf0;
+  --must: #9ba59e; --skip: #6fc29a; --skip-bg: #1c2e24; --maybe: #f0c060; --maybe-bg: #2e2716;
+  --shadow: none;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font-family: "Noto Sans TC", system-ui, -apple-system, "PingFang TC", "Microsoft JhengHei", sans-serif;
+  line-height: 1.7; font-size: 16px;
+}
+a { color: var(--accent); }
+.wrap { max-width: 980px; margin: 0 auto; padding: 0 16px; }
+
+nav.toc { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+nav.toc .wrap { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; }
+nav.toc a { text-decoration: none; color: var(--muted); font-size: 14px; font-weight: 500; padding: 12px 10px; white-space: nowrap; }
+nav.toc a:hover { color: var(--text); }
+nav.toc a.back { color: var(--accent); font-weight: 700; }
+#themeBtn { margin-left: auto; background: none; border: 0; color: var(--muted); font: inherit; font-size: 14px; cursor: pointer; padding: 12px 6px; white-space: nowrap; }
+
+header.hero { padding: 40px 0 20px; }
+.eyebrow { font-size: 13px; letter-spacing: .12em; color: var(--muted); font-weight: 700; }
+h1 { font-size: clamp(28px, 5.5vw, 42px); line-height: 1.25; margin: 6px 0 12px; font-weight: 900; }
+.lede { color: var(--muted); max-width: 660px; margin: 0; }
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 24px; }
+.stat { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; box-shadow: var(--shadow); }
+.stat b { display: block; font-size: 24px; font-weight: 900; line-height: 1.25; font-variant-numeric: tabular-nums; }
+.stat span { font-size: 13px; color: var(--muted); }
+.stat.hot b { color: var(--skip); }
+
+section { padding: 32px 0 8px; scroll-margin-top: 48px; }
+h2 { font-size: 24px; font-weight: 900; margin: 0 0 6px; }
+.sub { color: var(--muted); margin: 0 0 18px; font-size: 15px; }
+
+.alert { background: var(--warn-bg); border: 1px solid var(--warn-line); color: var(--warn-text); border-radius: 12px; padding: 14px 16px; margin-bottom: 14px; font-size: 15px; }
+.alert strong { display: block; margin-bottom: 2px; }
+
+/* status pills */
+.pill { display: inline-flex; align-items: center; gap: 4px; font-size: 12.5px; font-weight: 700; border-radius: 999px; padding: 1px 10px; white-space: nowrap; border: 1px solid currentColor; }
+.pill.must { color: var(--must); }
+.pill.pass { color: var(--must); border-style: dashed; }
+.pill.skip { color: var(--skip); background: var(--skip-bg); border-color: transparent; }
+.pill.maybe { color: var(--maybe); background: var(--maybe-bg); border-color: transparent; }
+.key { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-bottom: 18px; font-size: 14px; color: var(--muted); }
+.key span { display: inline-flex; align-items: center; gap: 8px; }
+
+/* timeline */
+.leg { font-size: 13px; font-weight: 900; letter-spacing: .08em; color: var(--d3); margin: 22px 0 8px 2px; }
+.leg:first-child { margin-top: 0; }
+.stops { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.stop { display: grid; grid-template-columns: 64px 1fr; gap: 14px; background: var(--surface); border: 1px solid var(--line); border-left: 6px solid var(--line); border-radius: 14px; padding: 14px 18px; box-shadow: var(--shadow); }
+.stop[data-s="skip"] { border-left-color: var(--skip); }
+.stop[data-s="maybe"] { border-left-color: var(--maybe); }
+.stop[data-s="must"], .stop[data-s="pass"] { border-left-color: var(--d3); }
+.stop time { font-weight: 900; font-size: 18px; font-variant-numeric: tabular-nums; line-height: 1.5; }
+.stop-head { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
+.stop h3 { margin: 0; font-size: 17px; font-weight: 700; line-height: 1.5; }
+.stop p { margin: 6px 0 0; font-size: 15px; }
+.stop .save { display: inline-block; margin-top: 8px; font-size: 13px; font-weight: 700; color: var(--skip); background: var(--skip-bg); border-radius: 8px; padding: 2px 10px; }
+.stop .gem { font-size: 13px; color: var(--muted); margin-top: 8px; }
+.steps { margin: 6px 0 0; padding-left: 20px; font-size: 15px; }
+.steps li { margin: 3px 0; }
+.alt { margin-top: 10px; background: var(--surface-2); border-radius: 10px; padding: 10px 12px; font-size: 14.5px; }
+.alt b { display: block; font-size: 14px; margin-bottom: 2px; }
+.stop .fix { margin-top: 8px; font-size: 13.5px; padding: 8px 10px; border-radius: 8px; background: var(--warn-bg); color: var(--warn-text); }
+.hidden { display: none; }
+.unv { font-size: 12px; font-weight: 700; color: var(--warn-text); background: var(--warn-bg); border-radius: 6px; padding: 0 6px; margin-left: 4px; white-space: nowrap; }
+.alert a { color: inherit; }
+
+
+footer { padding: 36px 0 56px; color: var(--muted); font-size: 13px; }
+
+@media (max-width: 720px) {
+  .stats { grid-template-columns: repeat(2, 1fr); }
+  .stop { grid-template-columns: 1fr; gap: 2px; padding: 12px 14px; }
+  .stop time { font-size: 16px; }
+    header.hero { padding-top: 28px; }
+}
+@media print {
+  nav.toc { display: none; }
+  .stop { break-inside: avoid; box-shadow: none; }
+  .hidden { display: grid; }
+}
+</style>
+</head>
+<body>
+
+<nav class="toc" aria-label="頁內導覽">
+  <div class="wrap">
+    <a class="back" href="index.html">← 回總覽</a>
+    <a href="#timeline">逐點時間</a>
+    <a href="#bail">撤退點</a>
+    <button id="themeBtn" type="button" aria-label="切換深淺色">◐ 深淺色</button>
+  </div>
+</nav>
+
+<header class="hero wrap">
+  <div class="eyebrow">2026 臺北大縱走 · DAY 3 細節</div>
+  <h1>第 3 + 4 段<br>冷水坑 → 七星山 → 風櫃口 → 大湖公園</h1>
+  <p class="lede">一個人一天連走兩段。小油坑往七星山主峰的步道封閉中，這天從冷水坑出發：先上七星山東峰、主峰再原路下回冷水坑，接著照官方方向往擎天崗、風櫃口，再走第 4 段到大溝溪，從捷運大湖公園站回家。時間用 Day 1 實測的配速推估：官方參考時間 × 0.65，第 3 段另加 30 分鐘緩衝。日期還沒定，平日和假日的交通都列在下面。</p>
+  <div class="stats">
+    <div class="stat"><b>06:00</b><span>出門</span></div>
+    <div class="stat"><b>~16:05</b><span>大湖公園站（估算）</span></div>
+    <div class="stat"><b>14 顆</b><span>寶石</span></div>
+    <div class="stat"><b>1,500 ml</b><span>出門帶水量</span></div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section id="timeline">
+  <h2>逐點時間表</h2>
+  <p class="sub">卡片左邊的色條：綠色＝可選岔路、紫色＝主線。12 月日落約 17:05，大溝溪之後的市區路段在天黑後走。</p>
+
+  <div class="alert">
+    <strong>七星山：小油坑登山口這一側封閉中，寶石移到主峰</strong>
+    臺北市大地工程處公告：小油坑登山口往七星山主峰步道約 0.6K 處下方掏空，<b>115/10/27 – 116/1/19 全面封閉施工</b>，請重新下載離線任務地圖。公告附的陽管處「七星山系步道施工暫時封閉路段圖」把小油坑登山口到主峰這段畫成封閉，並在<b>七星山主峰</b>標「<b>寶石移動位置</b>」：原本在小油坑這一側的寶石移到主峰。健行筆記活動頁寫的替代道路是苗圃登山口；這一頁改從冷水坑上東峰、主峰，主峰和東峰之間的步道沒有在封閉範圍。同一張圖另標七星公園往菁山路的步道 115/9/30 – 115/11/30 施工，不在這天的路線上。
+    （<a href="https://www.gov.taipei/News_Content.aspx?n=D0042A87C2F0270A&sms=78D644F2755ACCAA&s=B5C3286AB427441A" target="_blank" rel="noopener">市府公告與封閉路段圖</a>・<a href="https://hiking.biji.co/index.php?q=minisite&id=318" target="_blank" rel="noopener">健行筆記活動頁</a>；健行筆記本身對寶石移位的說明<span class="unv">未查到</span>）
+  </div>
+
+  <div class="key">
+    <span><i class="pill must">必要</i>行程節點</span>
+    <span><i class="pill pass">必經</i>主線經過的點</span>
+    <span><i class="pill skip">🟢 可選</i>岔路，寶石在主線上</span>
+  </div>
+
+  <div id="list">
+    <div class="leg">出發</div>
+    <ol class="stops">
+      <li class="stop" data-s="must">
+        <time>06:00</time>
+        <div>
+          <div class="stop-head"><h3>出門，搭捷運到劍潭</h3><span class="pill must">必要</span></div>
+          <ol class="steps">
+            <li>南京三民站搭松山新店線（往新店）到<b>中山站</b>，轉淡水信義線（往淡水）到<b>劍潭站</b>，約 06:25 到。</li>
+            <li>南京三民站首班車時間<span class="unv">未查到</span>，大約 06:00 前後，出門前用台北捷運 App 確認。</li>
+            <li>山上 07:00 前沒有商店開門，水和早餐先在家附近超商買好。</li>
+          </ol>
+        </div>
+      </li>
+      <li class="stop" data-s="must">
+        <time>06:35</time>
+        <div>
+          <div class="stop-head"><h3>小 15 直上冷水坑</h3><span class="pill must">必要</span></div>
+          <ol class="steps">
+            <li>劍潭站出站，在「<b>捷運劍潭站(北藝中心)</b>」站搭 <b>小 15（往擎天崗）</b>。</li>
+            <li>坐 40 站到「<b>冷水坑服務站</b>」下車（下一站是「冷水坑」，再下一站是終點「擎天崗」）。車程約 45 分<span class="unv">估算</span>，約 07:20 到。</li>
+            <li>小 15 首班 05:40（平日假日相同）；公車資料沒有列班距，網路文章寫約 20 分一班，06:25 之後的實際班次<span class="unv">未查到</span>，前一晚用「台北等公車」看時刻。</li>
+            <li>「<b>小 15區</b>」只開到菁山遊憩區，不到冷水坑，上車前看清楚車頭。</li>
+          </ol>
+          <div class="alt">
+            <b>選項：計程車從家裡出發（最早到）</b>
+            06:00 出門，走仰德大道、菁山路，約 06:45 到冷水坑遊客服務站，車資約 NT$650–800<span class="unv">估算</span>。12 月日出約 06:25。
+          </div>
+          <div class="alt">
+            <b>選項：紅 5 + 108（比小 15 晚到）</b>
+            「捷運劍潭站(北藝中心)」搭紅 5 坐 35 站到「陽明山總站」，轉 108。108 從總站出發是單向環狀：管理處 → 二子坪 → 小油坑服務站（第 13 站）→ 夢幻湖 → <b>冷水坑（第 17 站）</b> → 擎天崗；另一條「冷水坑服務站 → 菁山遊憩區 → 中山樓 → 總站」是下山方向，從總站上不去。108 首班 07:00，假日 20–30 分一班、平日 30–40 分一班。趕上首班約 07:45 到冷水坑，錯過就要等下一班，約 08:05–08:15<span class="unv">估算</span>。
+          </div>
+          <p class="gem">站序、首班、班距查自臺北市公車開放資料（2026/11/28）。1717 不經過冷水坑。</p>
+        </div>
+      </li>
+    </ol>
+
+    <div class="leg">第 3 段 · 冷水坑 → 七星山主峰來回 → 風櫃口（約 5 h 15 m）</div>
+    <ol class="stops">
+      <li class="stop" data-s="must">
+        <time>07:25</time>
+        <div>
+          <div class="stop-head"><h3>冷水坑遊客服務站起登</h3><span class="pill must">必要</span></div>
+          <p>打開<b>重新下載過的</b>第 3 段離線任務，定位常開。從冷水坑登山口往夢幻湖、教育廣播電台方向上東峰，約 1.6 km、爬升約 370 m（依鯊小旅行反向的分段數字），前段是步道，後段連續石階。</p>
+          <p class="gem">服務站一般 09:00 開門，清晨能不能用廁所、飲水機<span class="unv">未查到</span>。這條是來回路線，09:30 會再回到這裡。</p>
+        </div>
+      </li>
+      <li class="stop" data-s="pass">
+        <time>07:50</time>
+        <div>
+          <div class="stop-head"><h3>教育廣播電台旁三叉路口</h3><span class="pill pass">必經</span></div>
+          <p>往東峰、往夢幻湖、往冷水坑的路口。2026 年寶石地圖（三三行旅）在這附近標了一顆寶石，下山時會再經過一次。</p>
+        </div>
+      </li>
+      <li class="stop" data-s="pass">
+        <time>08:20</time>
+        <div>
+          <div class="stop-head"><h3>七星山東峰（1,107 m）</h3><span class="pill pass">必經</span></div>
+          <p>拓印柱「東」字在東峰。往西經苗圃岔路約 0.4 km 到主峰。</p>
+        </div>
+      </li>
+      <li class="stop" data-s="pass">
+        <time>08:30</time>
+        <div>
+          <div class="stop-head"><h3>七星山主峰（1,120 m）</h3><span class="pill pass">必經</span></div>
+          <p>三樣東西都在這裡：<b>移過來的寶石</b>（陽管處封閉路段圖標「寶石移動位置」）、<b>手拿牌</b>（官方活動辦法列在主峰活動柱，常要排隊）、拓印柱「西」字。在主峰看一下 APP，第 3 段應該已經有 2 顆。</p>
+          <p class="gem">往小油坑的下坡步道封閉，從主峰回頭走原路。山頂風大、沒遮蔽，東北季風天很冷，防風外套放在好拿的地方。</p>
+        </div>
+      </li>
+      <li class="stop" data-s="pass">
+        <time>08:35</time>
+        <div>
+          <div class="stop-head"><h3>原路下回冷水坑</h3><span class="pill pass">必經</span></div>
+          <p>主峰 → 苗圃岔路 → 東峰 → 三叉路口 → 冷水坑登山口，約 2 km，一路下坡石階。鯊小旅行這段約 50 分，這裡抓 60 分。</p>
+        </div>
+      </li>
+      <li class="stop" data-s="pass">
+        <time>09:30</time>
+        <div>
+          <div class="stop-head"><h3>冷水坑遊客服務站（第二次）</h3><span class="pill pass">必經</span></div>
+          <p><b>廁所、飲水機、販賣部</b>，在這裡補水。之後照官方方向往擎天崗。是撤退點：「冷水坑服務站」有 108 和小 15。</p>
+        </div>
+      </li>
+      <li class="stop" data-s="pass">
+        <time>09:50</time>
+        <div>
+          <div class="stop-head"><h3>雞心崙 → 往擎天崗中段</h3><span class="pill pass">必經</span></div>
+          <p>2026 年寶石地圖在冷水坑和擎天崗之間、雞心崙平台之後標了一顆。另有 2024 年的紀錄寫寶石在菁山吊橋旁的小平台，要稍微繞進去；2026 年實際位置以 APP 為準。</p>
+        </div>
+      </li>
+      <li class="stop" data-s="pass">
+        <time>10:10</time>
+        <div>
+          <div class="stop-head"><h3>擎天崗</h3><span class="pill pass">必經</span></div>
+          <p><b>手拿牌</b>在擎天崗大草原中央步道（官方活動辦法）。擎天崗遊客服務站有<b>廁所、飲水機、餐飲部</b>。是撤退點：小 15 從「擎天崗」發車，108 也有停。</p>
+          <p class="gem">草原上有水牛，保持距離、別盯著牛看，從旁邊慢慢繞過。</p>
+        </div>
+      </li>
+      <li class="stop" data-s="pass">
+        <time>10:20</time>
+        <div>
+          <div class="stop-head"><h3>金包里城門（嶺頭喦）</h3><span class="pill pass">必經</span></div>
+          <p>寶石在城門附近（2025 心得、2026 地圖都標在這裡）。過城門後往石梯嶺，稜線少遮蔽，起霧時跟緊步道。</p>
+        </div>
+      </li>
+      <li class="stop" data-s="pass">
+        <time>11:05</time>
+        <div>
+          <div class="stop-head"><h3>石梯嶺</h3><span class="pill pass">必經</span></div>
+          <p>寶石在石梯嶺附近。擎天崗到頂山之間沒有水、沒有廁所。</p>
+          <p class="gem">10/26 健行筆記有兩則第 3 段「倒木」回報、11/28 有一則「施工封路」回報，位置都沒寫<span class="unv">未查到</span>。</p>
+        </div>
+      </li>
+      <li class="stop" data-s="pass">
+        <time>11:50</time>
+        <div>
+          <div class="stop-head"><h3>頂山（768 m）</h3><span class="pill pass">必經</span></div>
+          <p>寶石在頂山，過柳杉林（黑森林）之後到。之後下坡約 1.9 km 到風櫃嘴。</p>
+        </div>
+      </li>
+      <li class="stop" data-s="pass">
+        <time>12:35</time>
+        <div>
+          <div class="stop-head"><h3>風櫃嘴涼亭前的最後一段</h3><span class="pill pass">必經</span></div>
+          <p>2026 年寶石地圖把第 3 段第 7 顆標在頂山下來、離風櫃嘴涼亭約 150 m 的步道上。2025 年心得寫的是小油坑服務站、小油坑觀景台各一顆，沒有這顆；2026 年以 APP 為準<span class="unv">未查到</span>。</p>
+        </div>
+      </li>
+      <li class="stop" data-s="must">
+        <time>12:40</time>
+        <div>
+          <div class="stop-head"><h3>風櫃嘴涼亭（第 3 段終點、第 4 段起點）</h3><span class="pill must">必要</span></div>
+          <p>確認 APP 顯示第 3 段 7 顆收齊，再打開第 4 段離線任務。拓印柱「北」字在涼亭前。附近有<b>流動廁所</b>，全成土雞城可以買吃的。</p>
+          <p class="gem">撤退點：「風櫃嘴」站搭市民小巴1 下山到士林、劍潭，往下山的時刻<span class="unv">未查到</span>，班次很少。</p>
+        </div>
+      </li>
+    </ol>
+
+    <div class="leg">第 4 段 · 風櫃口 → 大溝溪 → 大湖公園站（約 3 h 25 m）</div>
+    <ol class="stops">
+      <li class="stop" data-s="pass">
+        <time>12:50</time>
+        <div>
+          <div class="stop-head"><h3>風櫃嘴步道</h3><span class="pill pass">必經</span></div>
+          <p>面對涼亭，左手邊有往下的階梯步道，第 4 段第 1 顆寶石在這條步道上。之後會穿越幾次萬溪產業道路，注意來車和自行車。</p>
+          <p class="gem">路邊有山泉水，當地人會來裝，能不能生飲<span class="unv">未查到</span>。</p>
+        </div>
+      </li>
+      <li class="stop" data-s="pass">
+        <time>13:05</time>
+        <div>
+          <div class="stop-head"><h3>雙溪溝古道口</h3><span class="pill pass">必經</span></div>
+          <p>入口在路邊轉角、巨石旁邊，很容易走過頭，對照 APP 軌跡。古道口有流動廁所。古道沿溪走，有一處要踩石過溪，土路濕滑，偶有蛇。</p>
+          <p class="gem">11/1 有兩則「樹倒」、11/5 有一則「依附的繩索脫落」回報（健行筆記第 4 段），位置沒寫<span class="unv">未查到</span>。</p>
+        </div>
+      </li>
+      <li class="stop" data-s="pass">
+        <time>13:40</time>
+        <div>
+          <div class="stop-head"><h3>梅花山 → 碧山（土地公石像）</h3><span class="pill pass">必經</span></div>
+          <p>梅花山是這段最後一個上坡，之後大致一路下坡。五指山古道到碧山這段在樹蔭裡，雨後有爛泥。</p>
+        </div>
+      </li>
+      <li class="stop" data-s="skip">
+        <time>13:55</time>
+        <div>
+          <div class="stop-head"><h3>五指山森林公園攤販</h3><span class="pill skip">🟢 可選</span></div>
+          <p>在梅花山前，離主線約 3–5 分。2024 年心得寫有攤販賣補給，現在有沒有<span class="unv">未查到</span>。</p>
+        </div>
+      </li>
+      <li class="stop" data-s="pass">
+        <time>14:55</time>
+        <div>
+          <div class="stop-head"><h3>大崙頭北面步道 → 白石湖</h3><span class="pill pass">必經</span></div>
+          <p>經許願步道下到白石湖社區，有咖啡店、農場、草莓園（12–5 月），可以買水和吃的，平日營業時間<span class="unv">未查到</span>。白石湖吊橋在附近。</p>
+          <p class="gem">撤退點：「碧山巖(白石湖吊橋)」站搭小 2區到捷運內湖站，每天行駛。</p>
+        </div>
+      </li>
+      <li class="stop" data-s="pass">
+        <time>15:05</time>
+        <div>
+          <div class="stop-head"><h3>同心池・永結亭</h3><span class="pill pass">必經</span></div>
+          <p><b>手拿牌</b>在永結亭前（旁邊是荷花池）。之後接碧山路一小段馬路，再進圓覺寺步道，連續下坡，雨天滑。</p>
+        </div>
+      </li>
+      <li class="stop" data-s="pass">
+        <time>15:20</time>
+        <div>
+          <div class="stop-head"><h3>圓覺寺 → 圓覺瀑布</h3><span class="pill pass">必經</span></div>
+          <p>圓覺寺有<b>公廁</b>。<b>手拿牌</b>在圓覺瀑布前。</p>
+        </div>
+      </li>
+      <li class="stop" data-s="pass">
+        <time>15:50</time>
+        <div>
+          <div class="stop-head"><h3>大溝溪生態治水園區</h3><span class="pill pass">必經</span></div>
+          <p>拓印柱「南」字在親水公園門口，有<b>公廁</b>。三三行旅 2026 年攻略寫「大溝溪至中華科技大學無寶石」，同一份地圖把第 4 段最後一顆寶石標在大溝溪親水公園。在這裡看一下 APP 第 4 段的寶石數。</p>
+        </div>
+      </li>
+      <li class="stop" data-s="must">
+        <time>16:05</time>
+        <div>
+          <div class="stop-head"><h3>捷運大湖公園站（結束）</h3><span class="pill must">必要</span></div>
+          <p>第 4 段的寶石到大溝溪就收齊，這裡結束，到有網路的地方上傳軌跡。官方路線後面還有約 8 km 市區路到中華科大，那段沒有寶石。</p>
+        </div>
+      </li>
+    </ol>
+
+    <div class="leg">回家</div>
+    <ol class="stops">
+      <li class="stop" data-s="must">
+        <time>16:10</time>
+        <div>
+          <div class="stop-head"><h3>大湖公園站 → 南京三民站</h3><span class="pill must">必要</span></div>
+          <ol class="steps">
+            <li>文湖線<b>往動物園</b>方向，坐到<b>南京復興站</b>。</li>
+            <li>轉松山新店線<b>往松山</b>，坐 2 站到<b>南京三民站</b>，約 16:40 到家<span class="unv">估算</span>。</li>
+          </ol>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section id="bail">
+  <h2>撤退點與備案</h2>
+  <p class="sub">下山班次都以「台北等公車」即時動態為準。站序查自臺北市公車開放資料（2026/11/28）。</p>
+  <ol class="stops">
+    <li class="stop" data-s="must">
+      <time>09:30</time>
+      <div>
+        <div class="stop-head"><h3>冷水坑</h3><span class="pill must">撤退</span></div>
+        <ol class="steps">
+          <li>07:25 起登前和 09:30 回到這裡時都可以下山。「<b>冷水坑服務站</b>」搭 <b>108</b>（下山支線），經松園、菁山遊憩區、中山樓回「陽明山總站」（6 站），轉紅 5 到「捷運劍潭站(中山)」。</li>
+          <li>或在「冷水坑服務站」搭 <b>小 15</b>（往劍潭），坐 38 站到「捷運劍潭站(中山)」。</li>
+        </ol>
+      </div>
+    </li>
+    <li class="stop" data-s="must">
+      <time>10:10</time>
+      <div>
+        <div class="stop-head"><h3>擎天崗</h3><span class="pill must">撤退</span></div>
+        <p>小 15 從「擎天崗」站發車往劍潭；108 在擎天崗停靠後回到冷水坑，再走下山支線回陽明山總站。</p>
+      </div>
+    </li>
+    <li class="stop" data-s="must">
+      <time>12:40</time>
+      <div>
+        <div class="stop-head"><h3>風櫃嘴</h3><span class="pill must">撤退</span></div>
+        <p>「<b>風櫃嘴</b>」站搭<b>市民小巴1</b>，坐 33 站到「捷運劍潭站(中山)」。下山時刻<span class="unv">未查到</span>，計程車到劍潭約 NT$380–450<span class="unv">估算</span>，山上不一定叫得到。2026/9 的遊記提到可以往下走約 30 分到「聖人瀑布」站搭車（原文寫小 17；公車資料裡停「聖人瀑布」的是<b>小 18</b>，坐 35 站到「捷運劍潭站(中山)」），這條下切路線<span class="unv">未查到</span>。</p>
+      </div>
+    </li>
+    <li class="stop" data-s="must">
+      <time>14:55</time>
+      <div>
+        <div class="stop-head"><h3>白石湖</h3><span class="pill must">撤退</span></div>
+        <p>「<b>碧山巖(白石湖吊橋)</b>」站搭<b>小 2區</b>到「捷運內湖站(內湖)」，每天行駛，再轉文湖線。</p>
+      </div>
+    </li>
+    <li class="stop" data-s="must">
+      <time>16:05</time>
+      <div>
+        <div class="stop-head"><h3>捷運大湖公園站</h3><span class="pill must">終點</span></div>
+        <p>文湖線（往動物園）到南京復興站，轉松山新店線（往松山）2 站到南京三民站。</p>
+      </div>
+    </li>
+    <li class="stop" data-s="maybe">
+      <time>前一晚</time>
+      <div>
+        <div class="stop-head"><h3>APP 上還有寶石標在小油坑</h3><span class="pill maybe">視 APP</span></div>
+        <p>封閉路段圖寫寶石移到主峰。重新下載離線任務後，如果 APP 還有寶石標在<b>小油坑服務站</b>一帶（不在封閉步道上），早上改成先到小油坑、再搭 108 到冷水坑：</p>
+        <ol class="steps">
+          <li>紅 5 到「陽明山總站」，搭 <b>108</b> 首班 07:00，坐 13 站到「<b>小油坑服務站</b>」，約 07:30 到<span class="unv">估算</span>。也可以搭 1717（平日假日首班都是 07:00，從「捷運台大醫院站」發車，坐 44 站到「小油坑服務站」）。</li>
+          <li>收到寶石後，在同一站搭下一班 108，坐 4 站到「<b>冷水坑</b>」（這個方向的站名是「冷水坑」，不是「冷水坑服務站」）。108 假日 20–30 分一班、平日 30–40 分一班。</li>
+          <li>起登時間約 08:15–08:30<span class="unv">估算</span>，比上面晚約 50–60 分，後面全部往後推，大湖公園站約 17:00。</li>
+        </ol>
+        <p class="gem">小油坑登山口本身在封閉範圍內（封閉圖在登山口畫了禁止通行標誌），寶石若標在登山口之後的步道上，就以現場告示為準。</p>
+      </div>
+    </li>
+  </ol>
+</section>
+
+<section id="check">
+  <h2>出門前檢查</h2>
+  <ol class="steps">
+    <li>健行筆記 APP <b>重新下載</b>第 3 段離線任務（封閉後有改版），也下載第 4 段。在地圖上確認：第 3 段有一顆在七星山主峰、沒有寶石標在小油坑；第 4 段的寶石都在大溝溪之前。</li>
+    <li>前一晚在「台北等公車」看小 15 從劍潭（北藝中心）出發的早班時刻，決定搭小 15、計程車或紅 5 + 108。</li>
+    <li>看健行筆記<a href="https://hiking.biji.co/index.php?q=trail&act=detail&id=1467" target="_blank" rel="noopener">第三段</a>、<a href="https://hiking.biji.co/index.php?q=trail&act=detail&id=1468" target="_blank" rel="noopener">第四段</a>的最新回報（11/28 第 3 段有一則「施工封路」）；陽管處或大地處若有新的封閉公告，以公告為準。</li>
+    <li>看中央氣象署陽明山預報。東北季風天七星山頂、擎天崗到頂山又冷又起霧；前一兩天下過雨，雙溪溝古道和圓覺寺步道會很滑。</li>
+    <li>水 1,500 ml 出門。冷水坑經過兩次（第二次 09:30，服務站已開），擎天崗再補滿；擎天崗之後到白石湖之間沒有確定的補水點。行動糧 3–4 份。</li>
+    <li>防風外套、保暖層、雨具、頭燈；悠遊卡（小 15、捷運）；手機和行動電源充滿。</li>
+  </ol>
+</section>
+
+</main>
+
+<footer class="wrap">
+  <p>整理於 2026/11/28。時間是依官方參考時間 × 0.65 推估。第 3 段主峰寶石依陽管處封閉路段圖；其他寶石位置取自三三行旅 2026 年寶石地圖和 2025 年山友紀錄，以健行筆記 APP 當天顯示為準。資料來源：<a href="https://www.gov.taipei/News_Content.aspx?n=D0042A87C2F0270A&sms=78D644F2755ACCAA&s=B5C3286AB427441A" target="_blank" rel="noopener">大地處封閉公告與封閉路段圖</a>、<a href="https://hiking.biji.co/index.php?q=minisite&id=318" target="_blank" rel="noopener">健行筆記活動頁</a>、<a href="https://threethree.tw/taipeigrandtrail/" target="_blank" rel="noopener">三三行旅 2026 攻略與寶石地圖</a>、<a href="https://www.samejantravel.tw/trails/330644c1a89b819b9f52d272ce6938a6" target="_blank" rel="noopener">鯊小旅行第三段分段時間</a>、<a href="https://hiking.biji.co/index.php?act=info&q=review&review_id=36073" target="_blank" rel="noopener">2025 第三段寶石紀錄</a>、<a href="https://vocus.cc/article/6abe0afefd89780001759b65" target="_blank" rel="noopener">2026/9 第四段紀錄</a>、<a href="https://andyventure.com/taiwan-taipei-grand-trail-section-4/" target="_blank" rel="noopener">冒險安迪第四段</a>、<a href="https://taipeigrandtrail.gov.taipei/News_Content.aspx?n=C94E32183886B2B7&sms=0D4775CC3E9CCAF5&s=742601CDAA5541C3" target="_blank" rel="noopener">官網第四段</a>、臺北市公車開放資料。<a href="index.html">回到大縱走總覽 →</a></p>
+</footer>
+
+<script>
+(function () {
+  const root = document.documentElement;
+  try { const t = localStorage.getItem("tgt-theme"); if (t) root.dataset.theme = t; } catch (e) {}
+  document.getElementById("themeBtn").addEventListener("click", () => {
+    const cur = root.dataset.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    const next = cur === "dark" ? "light" : "dark";
+    root.dataset.theme = next;
+    try { localStorage.setItem("tgt-theme", next); } catch (e) {}
+  });
+})();
+</script>
+</body>
+</html>
