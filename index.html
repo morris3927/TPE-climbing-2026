@@ -107,23 +107,6 @@ h2 { font-size: 24px; font-weight: 900; margin: 0 0 6px; }
 .node-label { font-size: 13px; fill: var(--text); font-weight: 500; }
 .node { fill: var(--surface); stroke: var(--text); stroke-width: 2; }
 
-/* Plan */
-.days { display: grid; gap: 14px; }
-.day { background: var(--surface); border: 1px solid var(--line); border-left: 6px solid var(--c); border-radius: 14px; padding: 18px 20px; box-shadow: var(--shadow); }
-.day-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; }
-.day-head .n { font-weight: 900; color: var(--c); font-size: 14px; letter-spacing: .06em; }
-.day-head h3 { margin: 0; font-size: 20px; font-weight: 900; }
-.chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 12px; }
-.chip { background: var(--surface-2); border-radius: 999px; padding: 2px 10px; font-size: 13px; color: var(--muted); }
-.chip b { color: var(--text); font-weight: 700; }
-.timeline { list-style: none; margin: 0; padding: 0; border-left: 2px dashed var(--line); margin-left: 6px; }
-.timeline li { position: relative; padding: 2px 0 8px 18px; font-size: 15px; }
-.timeline li::before { content: ""; position: absolute; left: -7px; top: 9px; width: 12px; height: 12px; border-radius: 50%; background: var(--surface); border: 2px solid var(--c); }
-.timeline time { font-variant-numeric: tabular-nums; font-weight: 700; margin-right: 8px; }
-.day .why { margin: 8px 0 0; font-size: 14px; color: var(--muted); }
-.rest { text-align: center; color: var(--muted); font-size: 14px; padding: 2px 0; }
-.rest::before, .rest::after { content: "·  ·  ·"; margin: 0 10px; opacity: .6; }
-
 /* Segments */
 .progress { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
 .bar { flex: 1; height: 10px; background: var(--surface-2); border-radius: 999px; overflow: hidden; }
@@ -136,6 +119,7 @@ h2 { font-size: 24px; font-weight: 900; margin: 0 0 6px; }
 .num { flex: none; width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; font-weight: 900; color: #fff; background: var(--c); }
 .seg h3 { margin: 0; font-size: 17px; line-height: 1.4; font-weight: 700; }
 .seg .lvl { font-size: 12px; font-weight: 700; color: var(--muted); }
+.seg .lvl a { margin-left: 4px; }
 .seg label.chk { margin-left: auto; display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); cursor: pointer; white-space: nowrap; }
 .seg label.chk input { width: 18px; height: 18px; accent-color: var(--accent); }
 .kv { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 14px 0 10px; }
@@ -161,33 +145,54 @@ h2 { font-size: 24px; font-weight: 900; margin: 0 0 6px; }
 .rules dt { font-weight: 700; color: var(--muted); }
 .rules dd { margin: 0; }
 
-/* Transport */
-.modes { display: inline-flex; background: var(--surface-2); border-radius: 12px; padding: 4px; gap: 4px; margin-bottom: 16px; flex-wrap: wrap; }
-.modes button { border: 0; background: none; color: var(--muted); font: inherit; font-size: 15px; font-weight: 700; padding: 8px 16px; border-radius: 9px; cursor: pointer; }
-.modes button[aria-selected="true"] { background: var(--surface); color: var(--text); box-shadow: var(--shadow); }
-.tp-days { display: grid; gap: 12px; }
-.tp-day { background: var(--surface); border: 1px solid var(--line); border-left: 6px solid var(--c); border-radius: 14px; padding: 14px 18px; box-shadow: var(--shadow); }
-.tp-day h3 { margin: 0 0 8px; font-size: 16px; }
-.tp-day h3 span { color: var(--c); font-weight: 900; margin-right: 8px; }
-.tp-day ol { margin: 0; padding-left: 20px; font-size: 15px; }
-.tp-day li { margin: 4px 0; }
-.tp-day .bail { margin-top: 8px; font-size: 13.5px; color: var(--muted); }
 .unv { font-size: 12px; font-weight: 700; color: var(--warn-text); background: var(--warn-bg); border-radius: 6px; padding: 0 6px; margin-left: 4px; white-space: nowrap; }
-h3.block { font-size: 18px; margin: 32px 0 10px; }
-.bus-table { width: 100%; border-collapse: collapse; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; font-size: 14.5px; box-shadow: var(--shadow); }
-.bus-table th, .bus-table td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
-.bus-table thead th { background: var(--surface-2); font-size: 13px; color: var(--muted); }
-.bus-table tr:last-child td { border-bottom: 0; }
-.bus-table td:first-child { font-weight: 900; white-space: nowrap; }
-.bus-table .times { font-variant-numeric: tabular-nums; }
-.tbl-wrap { overflow-x: auto; border-radius: 14px; }
-.seg dl.tp { margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--line); }
-@media (max-width: 720px) {
-  .bus-table thead { display: none; }
-  .bus-table, .bus-table tbody, .bus-table tr, .bus-table td { display: block; width: 100%; }
-  .bus-table tr { border-bottom: 1px solid var(--line); padding: 8px 0; }
-  .bus-table td { border: 0; padding: 2px 14px; }
+
+/* Sidebar (desktop) */
+aside.side { display: none; }
+@media (min-width: 1100px) {
+  body { padding-left: 248px; }
+  nav.toc { display: none; }
+  aside.side { display: flex; flex-direction: column; gap: 18px; position: fixed; top: 0; left: 0; bottom: 0; width: 248px; overflow-y: auto; padding: 24px 18px 24px 20px; background: var(--surface); border-right: 1px solid var(--line); z-index: 20; }
+  section { scroll-margin-top: 16px; }
 }
+.side .brand { font-weight: 900; font-size: 17px; line-height: 1.35; text-decoration: none; color: var(--text); }
+.side .brand small { display: block; font-size: 12px; font-weight: 700; color: var(--muted); letter-spacing: .08em; }
+.side .cd { font-size: 13px; color: var(--muted); }
+.side .cd b { color: var(--danger); font-size: 15px; }
+.side h4 { margin: 0 0 6px; font-size: 12px; letter-spacing: .1em; color: var(--muted); font-weight: 700; }
+.side ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+.side a.lnk { display: flex; align-items: center; gap: 8px; text-decoration: none; color: var(--text); font-size: 14.5px; padding: 6px 10px; border-radius: 8px; }
+.side a.lnk:hover { background: var(--surface-2); }
+.side a.lnk.on { background: var(--surface-2); font-weight: 700; box-shadow: inset 3px 0 0 var(--accent); }
+.side a.lnk i { width: 10px; height: 10px; border-radius: 50%; background: var(--c); flex: none; }
+.side a.lnk .st { margin-left: auto; font-size: 12px; color: var(--muted); }
+.side a.lnk.done { color: var(--muted); }
+.side a.lnk.sub { font-size: 13.5px; color: var(--muted); padding: 4px 10px 4px 28px; }
+.side .segnums { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; padding: 4px 0 0 10px; }
+.side .segnums a { text-align: center; text-decoration: none; font-size: 13px; font-weight: 700; color: var(--text); border: 1px solid var(--line); border-radius: 7px; padding: 3px 0; }
+.side .segnums a:hover { border-color: var(--accent); }
+.side .themeBtn { margin-top: auto; align-self: flex-start; background: none; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); font: inherit; font-size: 13px; padding: 5px 12px; cursor: pointer; }
+.seg { scroll-margin-top: 16px; }
+
+/* Jump tiles */
+#go { padding-top: 28px; }
+.jump { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.jump a.tile { display: flex; flex-direction: column; gap: 6px; text-decoration: none; color: var(--text); background: var(--surface); border: 1px solid var(--line); border-left: 6px solid var(--c); border-radius: 14px; padding: 14px 16px 14px 18px; box-shadow: var(--shadow); transition: transform .15s, border-color .15s; }
+.jump a.tile:hover { transform: translateY(-2px); border-color: var(--c); }
+.jump a.tile:focus-visible { outline: 2px solid var(--c); outline-offset: 2px; }
+.tile-top { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.tile .segno { font-weight: 900; font-size: 13px; letter-spacing: .06em; color: var(--c); }
+.tile .badge { font-size: 12px; font-weight: 700; border-radius: 999px; padding: 0 9px; background: var(--surface-2); color: var(--muted); }
+.tile .badge.done { background: var(--accent); color: var(--surface); }
+.tile b.ttl { font-size: 18px; font-weight: 900; line-height: 1.35; }
+.tile .meta { font-size: 13.5px; color: var(--muted); }
+.tile .go { margin-top: auto; font-size: 14px; font-weight: 700; color: var(--c); }
+.tile.done { opacity: .75; }
+.jump-sub { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; font-size: 14px; }
+.jump-sub span { color: var(--muted); }
+.jump-sub a { text-decoration: none; border: 1px solid var(--line); border-radius: 999px; padding: 3px 12px; background: var(--surface); }
+.jump-sub a:hover { border-color: var(--accent); }
+@media (max-width: 720px) { .jump { grid-template-columns: 1fr; } }
 
 footer { padding: 40px 0 56px; color: var(--muted); font-size: 13px; }
 footer ul { padding-left: 18px; columns: 2; column-gap: 32px; }
@@ -203,11 +208,39 @@ footer li { break-inside: avoid; margin-bottom: 4px; }
 }
 @media print {
   nav.toc { display: none; }
-  .seg, .day, .tip { break-inside: avoid; box-shadow: none; }
+  .seg, .tile, .tip { break-inside: avoid; box-shadow: none; }
 }
 </style>
 </head>
-<body>
+<body id="top">
+<aside class="side" aria-label="側邊導覽">
+  <a class="brand" href="#top"><small>2026 臺北大縱走</small>完走計畫</a>
+  <div class="cd">距 12/31 截止 <b id="countdownSide">—</b></div>
+  <div>
+    <h4>行程</h4>
+    <ul>
+      <li><a class="lnk" href="seg21.html" style="--c: var(--d2)"><i></i>第 2 + 1 段<span class="st">待走</span></a></li>
+      <li><a class="lnk" href="seg34.html" style="--c: var(--d3)"><i></i>第 3 + 4 段<span class="st">待走</span></a></li>
+      <li><a class="lnk" href="seg58.html" style="--c: var(--d4)"><i></i>第 5 + 8 段<span class="st">待走</span></a></li>
+      <li><a class="lnk done" href="seg67.html" style="--c: var(--d1)"><i></i>第 6 + 7 段<span class="st">✓ 11/27</span></a></li>
+      <li><a class="lnk sub" href="seg2.html">備案：第 2 段單走</a></li>
+      <li><a class="lnk sub" href="seg1.html">備案：第 1 段單走</a></li>
+    </ul>
+  </div>
+  <div>
+    <h4>本頁</h4>
+    <ul id="sideNav">
+      <li><a class="lnk" href="#go">行程入口</a></li>
+      <li><a class="lnk" href="#map">路線圖</a></li>
+      <li><a class="lnk" href="#segments">8 段細節</a>
+        <div class="segnums"><a href="#seg-1">1</a><a href="#seg-2">2</a><a href="#seg-3">3</a><a href="#seg-4">4</a><a href="#seg-5">5</a><a href="#seg-6">6</a><a href="#seg-7">7</a><a href="#seg-8">8</a></div></li>
+      <li><a class="lnk" href="#tips">跑者提醒</a></li>
+      <li><a class="lnk" href="#rules">認證規則</a></li>
+    </ul>
+  </div>
+  <button class="themeBtn" type="button" aria-label="切換深淺色">◐ 深淺色</button>
+</aside>
+
 
 <header class="hero wrap">
   <div class="eyebrow">2026 臺北大縱走 · 快速完走計畫</div>
@@ -223,28 +256,56 @@ footer li { break-inside: avoid; margin-bottom: 4px; }
 
 <nav class="toc" aria-label="頁內導覽">
   <div class="wrap">
+    <a href="#go"><b>行程入口</b></a>
     <a href="#map">路線圖</a>
-    <a href="#plan">出走計畫</a>
-    <a href="#day1">Day 1 詳細</a>
-    <a href="seg21.html">第 2+1 段</a>
-    <a href="seg1.html">第 1 段</a>
-    <a href="seg2.html">第 2 段</a>
-    <a href="seg34.html">第 3–4 段</a>
-    <a href="seg58.html">第 5+8 段</a>
-    <a href="seg67.html">第 6–7 段</a>
-    <a href="#transport">交通方式</a>
     <a href="#segments">8 段細節</a>
     <a href="#tips">跑者提醒</a>
     <a href="#rules">認證規則</a>
-    <button id="themeBtn" type="button" aria-label="切換深淺色">◐ 深淺色</button>
+    <button id="themeBtn" class="themeBtn" type="button" aria-label="切換深淺色">◐ 深淺色</button>
   </div>
 </nav>
 
 <main class="wrap">
 
+<section id="go">
+  <h2>行程入口</h2>
+  <p class="sub">點一下就進到那天的逐點時間表、寶石位置和交通。自己走的段用 Day 1 實測速度估（官方參考時間 × 0.65），和女友走的第 2 段照官方時間。</p>
+  <div class="jump">
+    <a class="tile" href="seg21.html" style="--c: var(--d2)">
+      <div class="tile-top"><span class="segno">第 2 + 1 段</span><span class="badge">待走</span></div>
+      <b class="ttl">二子坪 → 小油坑 → 二子坪 → 關渡</b>
+      <span class="meta">第 2 段和女友正走，第 1 段自己反走 · 06:30 起登 → ~17:20 關渡</span>
+      <span class="go">看逐點行程 →</span>
+    </a>
+    <a class="tile" href="seg34.html" style="--c: var(--d3)">
+      <div class="tile-top"><span class="segno">第 3 + 4 段</span><span class="badge">待走</span></div>
+      <b class="ttl">冷水坑 → 七星山 → 風櫃嘴 → 大湖公園</b>
+      <span class="meta">小 15 直達冷水坑 · 06:00 出門 → ~16:40 到家</span>
+      <span class="go">看逐點行程 →</span>
+    </a>
+    <a class="tile" href="seg58.html" style="--c: var(--d4)">
+      <div class="tile-top"><span class="segno">第 5 + 8 段</span><span class="badge">待走</span></div>
+      <b class="ttl">碧山巖 → 劍潭，關渡騎到動物園</b>
+      <span class="meta">先爬再騎 YouBike · 06:00 出門 → ~15:15 到家</span>
+      <span class="go">看逐點行程 →</span>
+    </a>
+    <a class="tile done" href="seg67.html" style="--c: var(--d1)">
+      <div class="tile-top"><span class="segno">第 6 + 7 段</span><span class="badge done">✓ 11/27 完成</span></div>
+      <b class="ttl">中華科大 → 麟光 → 指南宮 → 政大</b>
+      <span class="meta">第 6 段約 3 h 40，第 7 段比規劃快 30 分</span>
+      <span class="go">看逐點行程 →</span>
+    </a>
+  </div>
+  <div class="jump-sub">
+    <span>第 2 + 1 段的備案（分開兩天走）：</span>
+    <a href="seg2.html">第 2 段單走</a>
+    <a href="seg1.html">第 1 段單走</a>
+  </div>
+</section>
+
 <section id="map">
   <h2>路線示意圖</h2>
-  <p class="sub">相對位置示意，非實際比例。點選圖例可只顯示某一天的路段。</p>
+  <p class="sub">相對位置示意，非實際比例。點選圖例可只顯示某一次出走的路段。</p>
   <div class="map-card">
     <svg id="mapSvg" viewBox="0 0 640 470" role="img" aria-label="臺北大縱走 8 段路線示意圖">
       <!-- river backdrop -->
@@ -290,245 +351,10 @@ footer li { break-inside: avoid; margin-bottom: 4px; }
     </svg>
     <div class="legend" id="legend">
       <button type="button" data-day="all" aria-pressed="true">全部</button>
-      <button type="button" data-day="1" aria-pressed="false"><i style="background:var(--d1)"></i>Day 1 · 6+7</button>
-      <button type="button" data-day="2" aria-pressed="false"><i style="background:var(--d2)"></i>Day 2 · 1+2</button>
-      <button type="button" data-day="3" aria-pressed="false"><i style="background:var(--d3)"></i>Day 3 · 3+4</button>
-      <button type="button" data-day="4" aria-pressed="false"><i style="background:var(--d4)"></i>Day 4 · 8+5</button>
-    </div>
-  </div>
-</section>
-
-<section id="plan">
-  <h2>出走計畫</h2>
-  <p class="sub">Day 1 實測：第 6 段幾乎照表走完，約為官方參考時間 × 0.65；第 7 段比規劃快 30 分。自己走的段照這個速度估，第 2 段跟女友走，照官方時間排。每段的逐點時間、寶石和交通都在各自的頁面。</p>
-
-  <div class="days">
-    <article class="day" style="--c: var(--d1)">
-      <div class="day-head"><span class="n">DAY 1 · ✅ 已完成 11/27</span><h3>第 6 + 7 段：南港山系 → 貓空</h3></div>
-      <div class="chips"><span class="chip">步行 <b>~19 km</b></span><span class="chip">第 6 段 <b>約 3 h 40</b>（照表）</span><span class="chip">第 7 段 <b>比規劃快 30 分</b></span></div>
-      <p class="why"><a href="seg67.html">第 6–7 段逐點行程 →</a></p>
-    </article>
-
-    <article class="day" style="--c: var(--d2)">
-      <div class="day-head"><span class="n">第 2 + 1 段 · 一天走完</span><h3>二子坪 → 小油坑（兩人），再回二子坪反走到關渡（自己）</h3></div>
-      <div class="chips"><span class="chip"><b>~24 km</b></span><span class="chip">預估 <b>06:30 二子坪起登 → 17:20 關渡</b></span><span class="chip">難度 難</span></div>
-      <ol class="timeline">
-        <li><time>05:45</time>計程車直上二子坪</li>
-        <li><time>06:30</time>和女友正走第 2 段：面天坪 → 大屯西峰 → 南峰 → 主峰 → 鞍部 → 竹子湖</li>
-        <li><time>~13:00</time>小油坑，女友搭 108 → 紅 5 回家；你叫車回二子坪（約 10 分）</li>
-        <li><time>~13:30</time>反走第 1 段：面天坪 → 清天宮 → 貴子坑 → 忠義山</li>
-        <li><time>~17:20</time>關渡站，捷運回家</li>
-      </ol>
-      <p class="why">當天看狀況，也可以改成下面兩張卡片的分開走。<a href="seg21.html">第 2 + 1 段逐點行程 →</a></p>
-    </article>
-
-    <article class="day" style="--c: var(--d2)">
-      <div class="day-head"><span class="n">備案 · 第 1 段分開走</span><h3>捷運關渡站 → 忠義山 → 清天宮 → 二子坪</h3></div>
-      <div class="chips"><span class="chip"><b>~13 km</b></span><span class="chip">爬升 <b>~1,000 m</b></span><span class="chip">預估 <b>06:00 出門 → 14:00 到家</b></span><span class="chip">難度 難</span></div>
-      <ol class="timeline">
-        <li><time>06:00</time>南京三民搭捷運，中山轉淡水信義線到關渡</li>
-        <li><time>~07:10</time>起登，北藝大 → 忠義山 → 貴子坑</li>
-        <li><time>~10:00</time>清天宮，接著是大屯連峰步道的長石階</li>
-        <li><time>~12:15</time>二子坪遊客服務站，搭 108區 → 紅 5 回劍潭</li>
-      </ol>
-      <p class="why"><a href="seg1.html">第 1 段逐點行程 →</a></p>
-    </article>
-
-    <article class="day" style="--c: var(--d2)">
-      <div class="day-head"><span class="n">備案 · 第 2 段分開走（跟女友，照官方時間）</span><h3>二子坪 → 大屯山群 → 竹子湖 → 小油坑</h3></div>
-      <div class="chips"><span class="chip"><b>10.5–12 km</b></span><span class="chip">爬升 <b>~716 m</b></span><span class="chip">預估 <b>06:40 出門 → 17:30 到家</b></span><span class="chip">難度 難</span></div>
-      <ol class="timeline">
-        <li><time>06:40</time>捷運到劍潭，紅 5 上陽明山總站，轉 108 / 108區到二子坪</li>
-        <li><time>~08:40</time>二子坪起登，面天坪 → 大屯西峰 → 南峰（拉繩段）</li>
-        <li><time>~12:15</time>大屯主峰 → 鞍部 → 竹子湖</li>
-        <li><time>~15:10</time>小油坑，搭 108 繞回總站，轉紅 5 下山</li>
-      </ol>
-      <p class="why">雨天和雨後避開，西峰到南峰的土徑會很滑。<a href="seg2.html">第 2 段逐點行程 →</a></p>
-    </article>
-
-    <article class="day" style="--c: var(--d3)">
-      <div class="day-head"><span class="n">第 3 + 4 段 · 自己走</span><h3>冷水坑 → 七星山 → 擎天崗 → 風櫃嘴 → 大溝溪</h3></div>
-      <div class="chips"><span class="chip">步行 <b>~8 h 40</b></span><span class="chip">預估 <b>06:00 出門 → 16:40 到家</b></span><span class="chip">難度 難 → 中</span></div>
-      <ol class="timeline">
-        <li><time>06:00</time>捷運到劍潭，搭小 15 直達冷水坑服務站</li>
-        <li><time>~07:25</time>冷水坑起登，上七星山東峰、主峰再原路下回冷水坑</li>
-        <li><time>~09:30</time>冷水坑 → 擎天崗 → 石梯嶺 → 頂山 → 12:40 風櫃嘴</li>
-        <li><time>~12:50</time>第 4 段雙溪溝古道 → 白石湖 → 圓覺瀑布 → 15:50 大溝溪</li>
-        <li><time>~16:05</time>捷運大湖公園站結束，文湖線回家</li>
-      </ol>
-      <p class="why">小油坑 → 七星山主峰步道 10/27–2027/1/19 封閉，寶石移到主峰，從冷水坑上下即可收到；出發前重新下載第 3 段離線任務。大溝溪之後的市區路沒有寶石，在大湖公園站結束。<a href="seg34.html">第 3–4 段逐點行程 →</a></p>
-    </article>
-
-    <article class="day" style="--c: var(--d4)">
-      <div class="day-head"><span class="n">第 5 + 8 段 · 先爬再騎</span><h3>碧山巖 → 劍潭山，再從關渡騎到動物園</h3></div>
-      <div class="chips"><span class="chip"><b>12 km 步行</b> + <b>38 km 單車</b></span><span class="chip">預估 <b>06:00 出門 → 15:15 到家</b></span><span class="chip">難度 易</span></div>
-      <ol class="timeline">
-        <li><time>06:00</time>捷運到內湖站，搭小 2區上碧山巖</li>
-        <li><time>~07:05</time>碧山巖起登，反走第 5 段：忠勇山 → 金龍產業道路 → 文間山 → 劍潭山</li>
-        <li><time>~10:35</time>劍潭站，搭淡水信義線到關渡，租 YouBike</li>
-        <li><time>~11:05</time>沿淡水河、新店溪、景美溪騎到動物園站還車，文湖線回家</li>
-      </ol>
-      <p class="why">從碧山巖往下走，整體下坡；劍潭和關渡都在淡水信義線上。關渡站下午常常沒車，旁邊的關渡國中、關渡自然公園站是備案。<a href="seg58.html">第 5 + 8 段逐點行程 →</a></p>
-    </article>
-  </div>
-</section>
-
-<section id="day1">
-  <h2>Day 1 詳細行程 · 11/27（五）</h2>
-  <p class="sub">第 6 + 7 段，從南京三民出門，傍晚回到家。山上的時間是用 2025–2026 年的實走紀錄，依你的配速打折推估的，實際以當天為準。</p>
-
-  <div class="alert">
-    <strong>最近一週的路況回報（健行筆記山友，非官方）</strong>
-    11/22：茶展中心步道過觀瀑亭約 100 m，樹上有 60–70 cm 的<b>虎頭蜂窩</b>，安靜快速通過，不要停留。<br>
-    11/19：指南宮綠光平台一帶「原路段不可走，要改走大成殿步道」。<br>
-    11/23：貓空站附近「施工封路，需改道」，確切路段不明。<br>
-    出發前一晚再看一次 <a href="https://hiking.biji.co/index.php?q=trail&act=detail&id=1471" target="_blank" rel="noopener">健行筆記第七段頁面</a> 的最新回報。
-  </div>
-
-  <div class="tbl-wrap">
-  <table class="bus-table">
-    <thead><tr><th>時間</th><th>地點</th><th>寶石 / 手拿牌</th><th>補給與注意</th></tr></thead>
-    <tbody>
-      <tr><td>05:45</td><td>出門</td><td>—</td><td>先在家附近超商買好水和早餐。水至少 1.5 L，中華科大到拇指山之間沒有水</td></tr>
-      <tr><td>05:50</td><td>八德路「新聚里」站，搭 205（往中華科技大學）</td><td>—</td><td>首班 05:30 從萬大國小發車，估計 05:55–06:05 經過<span class="unv">估算</span>；兩段票。用「台北等公車」看即時位置</td></tr>
-      <tr><td>~06:30</td><td>「中華科技大學」站下車</td><td>—</td><td>11/27 日出約 06:17，天已經亮了。校內有 7-11 自助店，清晨是否開<span class="unv">未查到</span></td></tr>
-      <tr><td colspan="4"><b>第 6 段：中華科大 → 麟光站</b></td></tr>
-      <tr><td>06:35</td><td>中華科大登山口起登</td><td>寶石 1–3 在起登後半小時內，間距很近</td><td>先打開健行筆記 APP、定位常開</td></tr>
-      <tr><td>~07:25</td><td>九五峰（375 m）</td><td>手拿牌（11/7 回報已遺失）</td><td>拇指山一帶有長陡階和拉繩。下坡後左側有廁所</td></tr>
-      <tr><td>~07:45</td><td>馬蹄平台</td><td>手拿牌；寶石 4 在平台之後</td><td>寶石 4 到 7 之間距離很遠，不用一直看 APP。<b>糶米古道入口就在馬蹄平台旁，很容易錯過</b></td></tr>
-      <tr><td>~08:35</td><td>糶米古道（糶米公廟步道口）</td><td>寶石 5</td><td>入口前是陡下階梯，越接近社區越陡；雨後濕滑</td></tr>
-      <tr><td>~08:55</td><td>忠正嶺安祿宮</td><td>寶石 6 在安祿宮左轉上步道後</td><td><b>飲水機（冰溫熱）和廁所</b>，在這裡補水。往世界山莊要走「土地公嶺步道」，告示牌沒寫這個名字，別走進世界山莊社區</td></tr>
-      <tr><td>~09:25</td><td>軍功山 → 中埔山</td><td>寶石 7 在中埔山三角點之後、福州山公園之前</td><td>中埔山東峰旁有攀岩路線（鑽樹洞、外傾鐵梯），走 APP 標示的步道。拇指山之後少遮蔭，要防曬</td></tr>
-      <tr><td>~10:05</td><td>富陽生態公園 → 捷運麟光站</td><td>第 6 段完成</td><td>富陽公園有公廁（有衛生紙）。<b>撤退點</b>：狀況不好就從麟光站搭文湖線回家</td></tr>
-      <tr><td colspan="4"><b>接駁：麟光站 → 千階步道口</b></td></tr>
-      <tr><td>~10:15</td><td>「捷運麟光站」公車站搭 282（往動物園）</td><td>這段沒有寶石</td><td>282 平日尖峰 12–15 分一班。坐約 11 站到「萬壽橋頭(木柵)」<span class="unv">車程未查到</span>。也可以在「名門社區」站上車，就在世界山莊旁</td></tr>
-      <tr><td>~10:40</td><td>「萬壽橋頭(木柵)」下車，走到指南宮竹柏參道口</td><td>—</td><td>約 600 m、10–15 分。跟著「指南宮後山」指標走；參道入口在小街道內，<b>左往指南宮</b></td></tr>
-      <tr><td colspan="4"><b>第 7 段：千階步道 → 政大</b></td></tr>
-      <tr><td>~10:55</td><td>指南宮千階步道（竹柏參道）</td><td>寶石 1 在千階中段；手拿牌在「終南亭」旁，位置隱密</td><td>連續石階，用走的就好</td></tr>
-      <tr><td>~11:20</td><td>指南宮</td><td>寶石 2</td><td>廁所、飲水、可買飲料</td></tr>
-      <tr><td>~11:35</td><td>綠光平台 → 大成殿步道</td><td>寶石 3</td><td>綠光平台維修中，照 11/19 回報改走大成殿步道。看到貓雕像時，步道在左手邊</td></tr>
-      <tr><td>~12:10</td><td>茶展中心步道 → 茶研發推廣中心</td><td>寶石 4</td><td>⚠️ 過觀瀑亭約 100 m 有虎頭蜂窩。推廣中心有廁所、飲水機、奉茶。看到被擋起來的橋就是走錯了</td></tr>
-      <tr><td>~12:45</td><td>貓空站</td><td>寶石 5</td><td><b>午餐</b>：周邊有餐廳、茶霜淇淋、豆花，平日營業時間<span class="unv">未查到</span>。貓纜 11/27 正常營運（09:00–21:00），是<b>撤退點</b></td></tr>
-      <tr><td>~13:25</td><td>樟樹步道 → 彩雲亭</td><td>寶石 6；手拿牌</td><td>從山上豆花轉進樟樹步道容易走錯。福德宮附近茶園階梯走左邊</td></tr>
-      <tr><td>~13:50</td><td>樟山寺</td><td>寶石 7，第 7 段完成</td><td>廁所、可裝水、奉茶。之後經過樟山寺公車站，往右走柏油路</td></tr>
-      <tr><td>~14:20</td><td>飛龍步道 → 政大後山</td><td>—</td><td>多青苔、容易滑。出口在校園裡，走「政大後山運動園區」比較好走，行健道樓梯陡</td></tr>
-      <tr><td colspan="4"><b>回家</b></td></tr>
-      <tr><td>~14:45</td><td>政大校門「政大一」站</td><td>—</td><td>從登山口到校門約 1.3 km。搭 282、66、236區 到捷運動物園站，或沿萬壽橋走 20–25 分</td></tr>
-      <tr><td>~15:45</td><td>到家</td><td>—</td><td>動物園站搭文湖線到南京復興站，轉松山新店線到南京三民站</td></tr>
-    </tbody>
-  </table>
-  </div>
-
-  <h3 class="block">為什麼麟光站之後要搭公車</h3>
-  <div class="tips">
-    <div class="tip">
-      <h3>✅ 方案 A：搭 282（推薦）</h3>
-      <ul>
-        <li>官方第 7 段從麟光站出發，前面約 2.4 km 是第 6 段的反方向（翻軍功山回世界山莊），再接約 3 km 的和平東路柏油路</li>
-        <li>這兩段<b>都沒有寶石</b>，認證只看 APP 的 7 顆寶石</li>
-        <li>搭 282 大約省下 1.5 小時，腿也留給後面</li>
-      </ul>
-    </div>
-    <div class="tip">
-      <h3>方案 B：全程用走的</h3>
-      <ul>
-        <li>麟光站 → 軍功山 → 世界山莊約 55 分（回頭路）</li>
-        <li>世界山莊 → 和平東路四段 → 萬壽橋 → 竹柏參道口約 1 小時</li>
-        <li>想完整走完官方路線就選這個，到家時間大約晚 1.5 小時</li>
-      </ul>
-    </div>
-  </div>
-
-  <h3 class="block">出門前檢查</h3>
-  <div class="tips">
-    <div class="tip">
-      <h3>前一晚</h3>
-      <ul>
-        <li>健行筆記 APP 下載第 6、7 段離線地圖，確認已報名 2026 任務</li>
-        <li>看中央氣象署週五預報。前一兩天下過雨，糶米古道和軍功山會很滑</li>
-        <li>看健行筆記第 6、7 段的最新路況回報</li>
-        <li>手機和行動電源充滿，APP 定位很耗電</li>
-      </ul>
-    </div>
-    <div class="tip">
-      <h3>背包</h3>
-      <ul>
-        <li>水 1.5 L 以上（安祿宮、指南宮、茶推中心、樟山寺可以補）</li>
-        <li>行動糧 2–3 份、午餐預算（貓空）</li>
-        <li>防曬、薄外套、雨具；悠遊卡（205 兩段票、282）</li>
-        <li>越野跑鞋或登山鞋，石階多可帶登山杖</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<section id="transport">
-  <h2>交通方式</h2>
-  <p class="sub">每段都是 A 進 B 出。選一種交通方式，看每天怎麼去起點、怎麼從終點回來。開車和騎機車的做法都是「車停終點附近，用大眾運輸去起點」，走完就回到車邊。</p>
-  <div class="modes" role="tablist" id="modes">
-    <button type="button" role="tab" data-mode="transit" aria-selected="true">🚇 大眾運輸</button>
-    <button type="button" role="tab" data-mode="car" aria-selected="false">🚗 開車</button>
-    <button type="button" role="tab" data-mode="moto" aria-selected="false">🛵 騎機車</button>
-  </div>
-  <div class="tp-days" id="tpDays"></div>
-
-  <h3 class="block">公車速查</h3>
-  <p class="sub">班次為起點站發車時間（大臺北公車資料，2026/11 查詢），不是中途站到站時間。實際以「台北等公車」App 即時動態為準。</p>
-  <div class="tbl-wrap">
-  <table class="bus-table">
-    <thead><tr><th>路線</th><th>用在哪裡</th><th>走向與班次</th></tr></thead>
-    <tbody>
-      <tr><td>108 遊園公車</td><td>二子坪、小油坑</td><td class="times"><b>單向環狀</b>：陽明山總站 → 二子坪 → 小油坑 → 冷水坑 → 擎天崗 → 總站。總站發車 07:00–17:30；平日 30–40 分、假日 20–30 分一班</td></tr>
-      <tr><td>108區</td><td>二子坪</td><td class="times">陽明山 ↔ 二子坪，07:40–15:40，平日約 40 分一班。平日降雨機率 ≥70% 或低溫特報時停駛</td></tr>
-      <tr><td>紅 5</td><td>劍潭 ↔ 陽明山總站</td><td class="times">05:30–23:30，假日 12–15 分一班</td></tr>
-      <tr><td>260</td><td>劍潭、士林 ↔ 陽明山總站</td><td class="times">往陽明山：05:40、06:20、07:00、07:40、08:20、09:00、10:00、12:00、13:00、14:00、15:00、17:00</td></tr>
-      <tr><td>1717 皇家客運</td><td>台北 ↔ 小油坑直達</td><td class="times">捷運台大醫院站 ↔ 金山，<b>只有部分班次進小油坑</b>。台北端進小油坑：平日 08:00、08:30、09:00、09:30、10:00、11:30、13:30、15:00；假日多一班 07:00。平日 08:00–09:00 三班有停劍潭站</td></tr>
-      <tr><td>市民小巴1</td><td>風櫃嘴</td><td class="times">劍潭站（北藝中心）→ 士林站 → 外雙溪 → 風櫃嘴 → 頂山。平日 06:10、10:10、13:10、15:40、17:30；假日多一班 06:30。下山經過風櫃嘴的時刻<span class="unv">未查到</span></td></tr>
-      <tr><td>小 15</td><td>冷水坑、擎天崗撤退</td><td class="times">劍潭站 → 冷水坑 → 擎天崗，假日約 30 分一班、末班 17:30（劍潭發車）</td></tr>
-      <tr><td>北環幹線</td><td>大湖公園站 ↔ 中華科大</td><td class="times">經大湖公園、東湖、南港展覽館到中華科大。假日 06:00–22:30，15–20 分一班</td></tr>
-      <tr><td>205</td><td>南港展覽館 ↔ 中華科大</td><td class="times">05:30–22:10，假日 20–30 分一班</td></tr>
-      <tr><td>藍 25 / 270</td><td>昆陽站 ↔ 中華科大</td><td class="times">藍 25 假日約 45 分一班；270 假日 15–20 分一班</td></tr>
-      <tr><td>小 2區</td><td>碧山巖 → 內湖站</td><td class="times"><b>每天行駛</b>，假日白天約 20–30 分一班（起點戲曲學院發車），山區可隨招隨停。小 2 假日停駛</td></tr>
-      <tr><td>282 / 66 / 棕 15</td><td>政大 → 動物園站</td><td class="times">282 假日約 30 分、66 約 20–30 分、棕 15 約 20–25 分一班；步行約 20–25 分</td></tr>
-    </tbody>
-  </table>
-  </div>
-
-  <h3 class="block">其他交通須知</h3>
-  <div class="tips">
-    <div class="tip">
-      <h3>計程車（估算）</h3>
-      <ul>
-        <li>劍潭／士林 → 小油坑：約 16 km，NT$450–550</li>
-        <li>風櫃嘴 → 劍潭：約 13 km，NT$380–450</li>
-        <li>小油坑 → 二子坪：3.1 km，車程約 7 分鐘</li>
-        <li>依北北基跳表費率推算，不是實際報價。山上可能叫不到空車，建議先預約</li>
-      </ul>
-    </div>
-    <div class="tip">
-      <h3>YouBike 與單車</h3>
-      <ul>
-        <li>前 30 分鐘免費，之後 4 小時內每 30 分鐘 10 元。第 8 段騎 3.5 小時約 60 元</li>
-        <li>任一站借、任一站還</li>
-        <li>帶單車搭捷運：<b>文湖線全線不開放</b>，關渡站可以。假日 06:00 起、平日 10–16 時和 22 時後；人車票 80 元，只能上第一或最後一節車廂</li>
-        <li>摺疊車包好可以比照行李，不受時段和車站限制</li>
-      </ul>
-    </div>
-    <div class="tip">
-      <h3>陽明山假日管制</h3>
-      <ul>
-        <li>花季期間例假日 08:00–15:00 管制仰德大道上山、14:00–18:00 管制下山，主要針對自用小客車</li>
-        <li>11–12 月非花季是否管制<span class="unv">未查到公告</span>，出發前查交通大隊消息</li>
-        <li>機車、計程車不在管制對象內</li>
-      </ul>
-    </div>
-    <div class="tip">
-      <h3>停車資料說明</h3>
-      <ul>
-        <li>停車場名稱、格數、費率取自臺北市與新北市停車開放資料，費率可能已調整，<b>以現場告示為準</b></li>
-        <li>週末會不會停滿都<span class="unv">未查到</span>，二子坪停車場假日常一位難求</li>
-        <li>中華科大、麟光站、風櫃嘴附近都沒有公有停車場</li>
-      </ul>
+      <button type="button" data-day="1" aria-pressed="false"><i style="background:var(--d1)"></i>6+7 ✓</button>
+      <button type="button" data-day="2" aria-pressed="false"><i style="background:var(--d2)"></i>2+1</button>
+      <button type="button" data-day="3" aria-pressed="false"><i style="background:var(--d3)"></i>3+4</button>
+      <button type="button" data-day="4" aria-pressed="false"><i style="background:var(--d4)"></i>5+8</button>
     </div>
   </div>
 </section>
@@ -611,11 +437,7 @@ footer li { break-inside: avoid; margin-bottom: 4px; }
     <li><a href="https://smiletaiwan.cw.com.tw/article/5606" target="_blank" rel="noopener">SmileTaiwan：第六段</a></li>
     <li><a href="https://www.ymsnp.gov.tw" target="_blank" rel="noopener">陽明山國家公園管理處</a></li>
     <li><a href="https://ebus.gov.taipei/" target="_blank" rel="noopener">大臺北公車（路線班表）</a></li>
-    <li><a href="https://data.taipei/" target="_blank" rel="noopener">臺北市停管處停車場開放資料</a></li>
-    <li><a href="https://data.ntpc.gov.tw/datasets/B1464EF0-9C7C-4A6F-ABF7-6BDF32847E68" target="_blank" rel="noopener">新北市公有路外停車場資料</a></li>
     <li><a href="https://www.youbike.com.tw/region/taipei/rate/" target="_blank" rel="noopener">YouBike 臺北市費率</a></li>
-    <li><a href="https://web.metro.taipei/QRCode/Notice%20to%20Passengers%20Travelling%20with%20Bicycles-Chinese.pdf?t=20251126" target="_blank" rel="noopener">臺北捷運攜帶自行車注意事項</a></li>
-    <li><a href="https://www.taiwan.nps.gov.tw/upload/file/2025-06-05/396ffccb-8889-4952-bd0b-2de224810348/陽明山國家公園無障礙旅遊資訊.pdf" target="_blank" rel="noopener">陽明山國家公園無障礙旅遊資訊</a></li>
     <li><a href="https://hiking.biji.co/index.php?q=trail&act=detail&id=1470" target="_blank" rel="noopener">健行筆記：第六段路線與回報</a></li>
     <li><a href="https://hiking.biji.co/index.php?q=trail&act=detail&id=1471" target="_blank" rel="noopener">健行筆記：第七段路線與回報</a></li>
     <li><a href="https://hiking.biji.co/index.php?q=minisite&id=318" target="_blank" rel="noopener">健行筆記：2026 臺北大縱走活動頁</a></li>
@@ -634,151 +456,53 @@ const U = '<span class="unv">未驗證</span>';
 const SEGMENTS = [
   { n: 1, day: 2, lvl: "難", title: "捷運關渡站 → 二子坪", km: "~13 km", time: "7–8 h", mine: "4.5–5.5 h",
     route: "關渡站 → 忠義山步道 → 貴子坑 → 清天宮 → 面天坪 → 二子坪遊憩區 → 二子坪遊客服務站",
-    go: "淡水信義線關渡站，出站即起點",
-    back: "服務站旁就是「二子坪」公車站：108 或 108區（末班 15:40）→ 陽明山總站 → 紅 5／260 到劍潭、士林",
-    car: "關渡水岸自然公園停車場（知行路 360 號，約 309 格，平日 20／假日 30 元/時）；終點有二子坪停車場（65 格，30 元/時）",
-    moto: "關渡水岸自然公園機車格（免費）、關渡國小運動中心；終點二子坪停車場 58 格，20 元/次",
     supply: "起點便利商店；終點二子坪遊客服務站",
     note: "8 段中爬升最多（約 950–1,000 m），後半是連續上坡石階。9/8 山友回報三慈宮一帶封路。" },
   { n: 2, day: 2, lvl: "難", title: "二子坪 → 小油坑", km: "10.5–12 km", time: "6–7 h", mine: "3.5–4.5 h",
     route: "二子坪 → 面天坪 → 大屯西峰 → 大屯南峰 → 大屯主峰觀景台 → 竹子湖 → 小油坑",
-    go: "劍潭／士林搭紅 5、260 到陽明山總站，轉 108 或 108區到二子坪；假日北投可搭 129、230 上陽明山",
-    back: "小油坑搭 108（繼續經冷水坑、擎天崗繞回總站）→ 紅 5；或搭會進小油坑的 1717 直達台北",
-    car: "車停陽明山第二停車場（112 格，假日 30 元/時）最順：108 單向繞一圈，去程到二子坪、回程從小油坑都回到總站",
-    moto: "陽明山第二停車場機車 149 格（20 元/次），或二子坪停車場；小油坑接回二子坪只有 3.1 km",
     supply: "竹子湖一帶有店家；終點小油坑遊客服務站",
     note: "西峰到南峰要拉繩陡上陡下，土徑濕滑，雨天和雨後避開。爬升約 716 m。" },
   { n: 3, day: 3, lvl: "難", title: "小油坑 → 風櫃口", km: "12–13 km", time: "7–8 h", mine: "4–5 h",
-    route: "小油坑 → 七星山主峰（1,120 m）→ 東峰 → 冷水坑 → 擎天崗 → 石梯嶺 → 頂山 → 風櫃口",
-    go: "108 到小油坑服務站；或 1717 從台大醫院站直達（僅部分班次，假日最早 07:00）；計程車劍潭出發約 NT$450–550（估算）",
-    back: "風櫃嘴搭市民小巴1 到士林站、劍潭站，班次少、下山時刻" + U + "；計程車約 NT$380–450（估算）。中途可在冷水坑、擎天崗搭小 15 或 108 撤退",
-    car: "小油坑停車場（60 格，30 元/時）；風櫃嘴沒有公有停車場。建議停陽明山總站一帶，108 上小油坑，走完搭市民小巴1 到士林站再轉紅 5 回去",
-    moto: "小油坑 23 格（20 元/次）、小油坑橋 23 格（免費）；風櫃嘴只能路邊停" + U,
+    route: "（官方）小油坑 → 七星山主峰 → 東峰 → 冷水坑 → 擎天崗 → 石梯嶺 → 頂山 → 風櫃口。封閉期間：冷水坑 → 東峰 → 主峰來回 → 冷水坑 → 擎天崗 → 風櫃口",
     supply: "小油坑、冷水坑、擎天崗遊客服務站",
-    note: "小油坑 → 七星山主峰步道 2026/10/27–2027/1/19 封閉（大地工程處公告），改從苗圃登山口上主峰，出發前重新下載第 3 段離線任務。擎天崗之後稜線風大、易起霧。" },
+    note: "小油坑 → 七星山主峰步道 2026/10/27–2027/1/19 封閉（大地工程處公告），寶石移到主峰，從冷水坑上下即可收到，出發前重新下載第 3 段離線任務。擎天崗之後稜線風大、易起霧。" },
   { n: 4, day: 3, lvl: "中", title: "風櫃口 → 中華科技大學", km: "~18 km", time: "7–8 h", mine: "4.5–5.5 h",
     route: "風櫃口 → 雙溪溝古道 → 白石湖吊橋 → 圓覺寺 → 大溝溪 → 捷運大湖公園站 → 南湖大橋 → 南港展覽館 → 中華科大",
-    go: "劍潭站（北藝中心）搭市民小巴1 到風櫃嘴，車程約 1 小時：平日 06:10 之後要等到 10:10，假日多一班 06:30",
-    back: "中華科大搭北環幹線（經南港展覽館、大湖公園）或 205 到南港展覽館站；藍 25／270 到昆陽站。官網寫的 620 在現行公車資料查不到",
-    car: "大湖公園地下停車場（成功路五段 7 號，221 格，20 元/時）：早上搭捷運去劍潭轉市民小巴1，走完從中華科大搭北環幹線回大湖公園站",
-    moto: "大湖公園地下停車場 64 格（10 元/時，當日上限 20 元）；故宮廣場停車場 179 格可搭配市民小巴1",
     supply: "大湖公園站一帶；白石湖 12–5 月有草莓園",
-    note: "山徑約 10 km，以下坡為主，後半約 8 km 是市區路。寶石位置以 APP 為準。" },
+    note: "山徑約 10 km，以下坡為主。大溝溪之後約 8 km 市區路沒有寶石（三三行旅 2026），排在大湖公園站結束。" },
   { n: 5, day: 4, lvl: "易", title: "捷運劍潭站 → 碧山巖（劍潭支線）", km: "~12 km", time: "6–7 h", mine: "3.5–4.5 h",
     route: "劍潭站 → 老地方觀機平台 → 文間山 → 鄭成功廟 → 金龍產業道路 → 忠勇山 → 碧山巖",
-    go: "劍潭站出站往中山北路，步行 5–10 分到圓山旁登山口",
-    back: "「碧山巖(白石湖吊橋)」站搭小 2區到捷運內湖站，每天行駛，車程約 10 分；小 2 假日停駛",
-    car: "劍潭轉乘停車場（中山北路五段 65 號，142 格，假日 30–40 元/時）；走完搭小 2區到內湖站，捷運回劍潭。碧山巖有廟方免費停車場" + U,
-    moto: "劍潭站橋下機車停車場、劍潭轉乘停車場各約 155 格，20 元/次",
     supply: "起點附近；沿途店家少，自備",
-    note: "獨立支線，不和其他段相接。岔路多，金龍產業道路一帶容易走錯，開 GPX 走。" },
+    note: "獨立支線，不和其他段相接。排成從碧山巖往劍潭反走，整體下坡。岔路多，金龍產業道路一帶容易走錯，開 GPX 走。" },
   { n: 6, day: 1, lvl: "中", title: "中華科技大學 → 捷運麟光站", km: "~11 km", time: "5–6 h", mine: "3.5–4 h",
     route: "中華科大 → 九五峰（375 m）→ 糶米古道 → 忠正嶺 → 世界山莊 → 軍功山 → 中埔山 → 富陽生態公園 → 麟光站",
-    go: "南港展覽館站轉 205、北環幹線、小 1、小 12；或昆陽站轉藍 25、270（645副只有平日）",
-    back: "文湖線麟光站，就在終點",
-    car: "中華科大和麟光站附近都沒有公有停車場，麟光只有十幾格的民營場（80–100 元/時）。建議車停動物園站，搭文湖線來回",
-    moto: "麟光站附近沒有公有機車場；建議停動物園站地下停車場（200 格，20 元/次）",
     supply: "世界山莊一帶有住宅區；其他自備",
     note: "沒有拉繩陡坡，以石階和石板路為主。岔路多，先下載 GPX。" },
   { n: 7, day: 1, lvl: "易", title: "世界山莊 → 政大後山（飛龍步道）", km: "~10–13 km", time: "5–6 h", mine: "3.5–4 h",
     route: "（麟光站 → 富陽）→ 世界山莊 → 萬壽橋 → 指南宮千階步道 → 茶展中心 → 貓纜貓空站 → 樟樹步道 → 飛龍步道 → 政大",
-    go: "2026 官方起點是世界山莊：麟光站 1 號出口經富陽公園走過去約 30 分（推估）；和平幹線部分班次停「世界山莊」站",
-    back: "政大站搭 282、66、棕 15 到捷運動物園站，或沿萬壽橋步行 20–25 分",
-    car: "動物園河川高灘地停車場（1,276 格，平日計次 50 元、假日 60 元/時）或動物園站地下停車場；起點附近有辛亥國小地下停車場（132 格，20 元/時）",
-    moto: "動物園站地下停車場 200 格，20 元/次",
     supply: "指南宮、貓空茶園店家",
     note: "連續階梯多但路況好、沒有泥巴路。樟樹步道 1–2 月有魯冰花。" },
   { n: 8, day: 4, lvl: "易", title: "捷運動物園站 → 捷運關渡站（河濱單車）", km: "~38 km", time: "騎車 4–5 h", mine: "3–3.5 h",
     route: "動物園站 → 景美溪右岸 → 新店溪 → 馬場町 → 華江雁鴨公園 → 大稻埕碼頭 → 社子島頭 → 社子大橋 → 關渡自然公園 → 關渡站",
-    go: "文湖線動物園站，YouBike「捷運動物園站」57 位；2 號出口站目前暫停",
-    back: "「捷運關渡站(1號出口)」還車，99 位",
-    car: "車停終點關渡水岸自然公園停車場（假日 30 元/時，比動物園 60 元/時便宜），搭捷運到動物園站租 YouBike 騎回來",
-    moto: "關渡水岸自然公園機車格（免費），同上搭捷運去動物園",
     supply: "沿途河濱公園、大稻埕碼頭",
-    note: "全程平坦。社子島頭要牽車上社子大橋，關渡段牽引道多。2026 起微型電動二輪車禁止進入河濱自行車道。" }
+    note: "全程平坦。排成從關渡騎到動物園。社子島頭要牽車上社子大橋，關渡段牽引道多。2026 起微型電動二輪車禁止進入河濱自行車道。" }
 ];
 
-const TRANSPORT = {
-  transit: [
-    { day: 1, t: "第 6 + 7 段", steps: [
-      "去：從南京三民走到八德路「新聚里」站，搭 205 直達「中華科技大學」站，不用轉車",
-      "備案：文湖線到南港展覽館站，轉 205 或北環幹線",
-      "中途：麟光站搭 282 到「萬壽橋頭(木柵)」，走 10–15 分到千階步道口（這段沒有寶石）",
-      "回：政大站搭 282、66、棕 15 到動物園站（或步行 20–25 分）"],
-      bail: "撤退點：麟光站（文湖線）、世界山莊（和平幹線、綠 11）、貓空站（貓纜）" },
-    { day: 2, t: "第 1 + 2 段", steps: [
-      "去：淡水信義線關渡站，06:00 首班車",
-      "回：小油坑搭 108，經冷水坑、擎天崗繞回陽明山總站，再轉紅 5 到劍潭（108 總站末班 17:30）",
-      "替代：會進小油坑的 1717 直達台北，金山端最晚一班 16:00 發車"],
-      bail: "撤退點：二子坪（108、108區，108區末班 15:40）" },
-    { day: 3, t: "第 3 + 4 段", steps: [
-      "去：計程車劍潭／士林 → 小油坑（約 NT$450–550，估算）；假日可搭 07:00 台大醫院站發車、進小油坑的 1717",
-      "或：紅 5 到陽明山總站，轉 108 首班 07:00（出發會晚一些）",
-      "回：中華科大搭北環幹線或 205 到南港展覽館站"],
-      bail: "撤退點：冷水坑、擎天崗（小 15、108）；風櫃嘴（市民小巴1，班次少）；大湖公園站（文湖線）" },
-    { day: 4, t: "第 8 + 5 段", steps: [
-      "去：文湖線動物園站，租 YouBike（前 30 分免費，騎完約 60 元）",
-      "接駁：關渡站還車，搭淡水信義線到劍潭站（約 20 分）",
-      "回：碧山巖搭小 2區到捷運內湖站"],
-      bail: "第 8 段沿途有很多 YouBike 站可還車，撤退最容易" }
-  ],
-  car: [
-    { day: 1, t: "第 6 + 7 段", steps: [
-      "停：動物園河川高灘地停車場（平日計次 50 元）或動物園站地下停車場",
-      "去：搭文湖線到南港展覽館（同一條線，不用轉乘），轉公車到中華科大",
-      "回：政大搭公車到動物園站，取車"],
-      bail: "麟光站有民營停車場，但只有十幾格、80–100 元/時，不建議" },
-    { day: 2, t: "第 1 + 2 段", steps: [
-      "停：關渡水岸自然公園停車場（平日 20／假日 30 元/時）",
-      "回：小油坑 108 → 陽明山總站 → 紅 5 到劍潭 → 淡水信義線回關渡，大約 1.5 小時",
-      "替代：車停陽明山第二停車場，早上紅 5 下山再搭捷運到關渡，走完 108 回總站就能取車"],
-      bail: "假日上陽明山可能有管制（非花季未查到公告），停關渡就不受影響" },
-    { day: 3, t: "第 3 + 4 段", steps: [
-      "停：大湖公園地下停車場（221 格，20 元/時）",
-      "去：文湖線轉淡水信義線到劍潭，再搭計程車或 1717 上小油坑",
-      "回：中華科大搭北環幹線直接回大湖公園站，取車"],
-      bail: "這天起終點離最遠，車停中途點的大湖公園最省事" },
-    { day: 4, t: "第 8 + 5 段", steps: [
-      "停：劍潭轉乘停車場（142 格）",
-      "去：捷運到動物園站（中途轉文湖線，約 40 分），租 YouBike 騎到關渡",
-      "接駁：關渡搭捷運回劍潭，直接開走第 5 段",
-      "回：碧山巖搭小 2區到內湖站，捷運回劍潭取車"],
-      bail: "自備單車的話，文湖線不能帶車上捷運，要從家裡騎到動物園，或用包好的摺疊車" }
-  ],
-  moto: [
-    { day: 1, t: "第 6 + 7 段", steps: [
-      "停：動物園站地下停車場（200 格，20 元/次）",
-      "其他同開車：文湖線去南港展覽館轉公車，走完從政大搭公車回動物園"],
-      bail: "" },
-    { day: 2, t: "第 1 + 2 段", steps: [
-      "停：關渡水岸自然公園機車格（免費）",
-      "回：同開車，108 → 紅 5 → 捷運回關渡",
-      "替代：機車可以直接騎上陽明山，停陽明山第二停車場（149 格，20 元/次），不受假日小客車管制"],
-      bail: "" },
-    { day: 3, t: "第 3 + 4 段", steps: [
-      "停：大湖公園地下停車場（64 格，10 元/時，當日上限 20 元）",
-      "同開車：捷運到劍潭轉計程車或 1717 上小油坑，走完搭北環幹線回大湖公園"],
-      bail: "" },
-    { day: 4, t: "第 8 + 5 段", steps: [
-      "停：劍潭站橋下機車停車場或劍潭轉乘停車場（20 元/次）",
-      "同開車：捷運到動物園騎 YouBike，關渡搭捷運回劍潭走第 5 段，小 2區到內湖再搭捷運回劍潭"],
-      bail: "" }
-  ]
-};
 const DAY_COLOR = { 1: "var(--d1)", 2: "var(--d2)", 3: "var(--d3)", 4: "var(--d4)" };
+const OUTING = { 1: ["第 6 + 7 段", "seg67.html"], 2: ["第 2 + 1 段", "seg21.html"], 3: ["第 3 + 4 段", "seg34.html"], 4: ["第 5 + 8 段", "seg58.html"] };
 const KEY = "tgt2026-done";
 
-function load() { try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch (e) { return []; } }
+function load() { try { return JSON.parse(localStorage.getItem(KEY)) || [6, 7]; } catch (e) { return [6, 7]; } }
 function save(v) { try { localStorage.setItem(KEY, JSON.stringify(v)); } catch (e) {} }
 
 function render() {
   const done = new Set(load());
   const box = document.getElementById("segs");
   box.innerHTML = SEGMENTS.map(s => `
-    <article class="seg${done.has(s.n) ? " done" : ""}" style="--c:${DAY_COLOR[s.day]}">
+    <article id="seg-${s.n}" class="seg${done.has(s.n) ? " done" : ""}" style="--c:${DAY_COLOR[s.day]}">
       <div class="seg-top">
         <div class="num">${s.n}</div>
-        <div><h3>${s.title}</h3><span class="lvl">難度 ${s.lvl} · 排在 Day ${s.day}</span></div>
+        <div><h3>${s.title}</h3><span class="lvl">難度 ${s.lvl} · 排在<a href="${OUTING[s.day][1]}">${OUTING[s.day][0]}</a></span></div>
         <label class="chk"><input type="checkbox" data-n="${s.n}" ${done.has(s.n) ? "checked" : ""}>完成</label>
       </div>
       <div class="kv">
@@ -788,13 +512,7 @@ function render() {
       </div>
       <p class="route">${s.route}</p>
       <dl>
-        <dt>🚇 去程</dt><dd>${s.go}</dd>
-        <dt>🚇 回程</dt><dd>${s.back}</dd>
         <dt>補給</dt><dd>${s.supply}</dd>
-      </dl>
-      <dl class="tp">
-        <dt>🚗 開車</dt><dd>${s.car}</dd>
-        <dt>🛵 機車</dt><dd>${s.moto}</dd>
       </dl>
       <div class="note">${s.note}</div>
     </article>`).join("");
@@ -834,28 +552,26 @@ document.getElementById("legend").addEventListener("click", e => {
 (function () {
   const root = document.documentElement;
   try { const t = localStorage.getItem("tgt-theme"); if (t) root.dataset.theme = t; } catch (e) {}
-  document.getElementById("themeBtn").addEventListener("click", () => {
+  document.querySelectorAll(".themeBtn").forEach(btn => btn.addEventListener("click", () => {
     const cur = root.dataset.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
     const next = cur === "dark" ? "light" : "dark";
     root.dataset.theme = next;
     try { localStorage.setItem("tgt-theme", next); } catch (e) {}
-  });
+  }));
 })();
 
-function renderTransport(mode) {
-  document.getElementById("tpDays").innerHTML = TRANSPORT[mode].map(d => `
-    <article class="tp-day" style="--c:${DAY_COLOR[d.day]}">
-      <h3><span>DAY ${d.day}</span>${d.t}</h3>
-      <ol>${d.steps.map(x => `<li>${x}</li>`).join("")}</ol>
-      ${d.bail ? `<p class="bail">${d.bail}</p>` : ""}
-    </article>`).join("");
-  document.querySelectorAll("#modes button").forEach(b => b.setAttribute("aria-selected", b.dataset.mode === mode));
-  try { localStorage.setItem("tgt-mode", mode); } catch (e) {}
-}
-document.getElementById("modes").addEventListener("click", e => {
-  const b = e.target.closest("button"); if (b) renderTransport(b.dataset.mode);
-});
-(function () { let m = "transit"; try { m = localStorage.getItem("tgt-mode") || m; } catch (e) {} if (!TRANSPORT[m]) m = "transit"; renderTransport(m); })();
+// sidebar: mirror countdown, highlight current section
+(function () {
+  const main = document.getElementById("countdown"), side = document.getElementById("countdownSide");
+  if (main && side) { const sync = () => { side.textContent = main.textContent; }; sync(); new MutationObserver(sync).observe(main, { childList: true, characterData: true, subtree: true }); }
+  const links = [...document.querySelectorAll("#sideNav a.lnk")];
+  if (!("IntersectionObserver" in window) || !links.length) return;
+  const byId = Object.fromEntries(links.map(a => [a.getAttribute("href").slice(1), a]));
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { links.forEach(a => a.classList.remove("on")); byId[e.target.id] && byId[e.target.id].classList.add("on"); } });
+  }, { rootMargin: "-30% 0px -60% 0px" });
+  Object.keys(byId).forEach(id => { const el = document.getElementById(id); if (el) io.observe(el); });
+})();
 
 render();
 </script>
